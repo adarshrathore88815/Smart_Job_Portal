@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/">Home</a>
+<a href="/register" class="join-btn">Join now</a>
+<a href="/login" class="sign-btn">Sign in</a>
+
+</div>
+
+</nav>
+
+<!-- Login Section -->
+
+<section class="login-page">
+
+<div class="login-box">
+
+<h1>Sign in</h1>
+<p>Stay updated on your professional world.</p>
+
+<form method="POST">
+
+<input type="email" name="email" placeholder="Email Address" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<button type="submit" class="blue-btn">Sign in</button>
+
+</form>
+
+<div class="extra-text">
+New to SmartPortal?
+<a href="/register">Join now</a>
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

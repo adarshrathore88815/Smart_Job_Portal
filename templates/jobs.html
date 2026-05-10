@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/">Home</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/login" class="sign-btn">Logout</a>
+
+</div>
+
+</nav>
+
+<!-- Jobs Section -->
+
+<section class="jobs-page">
+
+<div class="jobs-left">
+
+<h2>Recommended Jobs</h2>
+
+<form method="GET" action="/jobs">
+
+<input type="text" name="search" placeholder="Search jobs..." style="width:70%; padding:12px; border-radius:8px; border:1px solid #ccc;">
+
+<button type="submit" style="width:25%;">Search</button>
+
+</form>
+
+<br>
+
+{% for job in jobs %}
+
+<div class="job-box">
+
+<h3>{{ job[1] }}</h3>
+
+<p>📍 {{ job[2] }}</p>
+
+<p>💰 {{ job[3] }}</p>
+
+<a href="/apply/{{ job[1] }}/{{ job[2] }}/{{ job[3] }}">
+<button class="blue-btn">Apply Now</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="jobs-right">
+
+<div class="side-box">
+<h3>Career Tips 🚀</h3>
+<p>Update resume regularly.</p>
+<p>Apply daily for better chances.</p>
+<p>Build LinkedIn profile.</p>
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

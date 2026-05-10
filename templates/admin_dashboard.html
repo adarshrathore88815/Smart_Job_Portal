@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/">Home</a>
+<a href="/admin" class="sign-btn">Logout</a>
+
+</div>
+
+</nav>
+
+<!-- Admin Panel -->
+
+<section class="dashboard-page">
+
+<div class="welcome-box">
+
+<h1>Welcome Admin 👑</h1>
+<p>Manage jobs, users and portal activities.</p>
+
+<a href="/add-job">
+<button class="blue-btn">Add New Job</button>
+</a>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h2>152</h2>
+<p>Total Users</p>
+</div>
+
+<div class="stat-card">
+<h2>18</h2>
+<p>Active Jobs</p>
+</div>
+
+<div class="stat-card">
+<h2>74</h2>
+<p>Applications</p>
+</div>
+
+</div>
+
+<br>
+
+<a href="/admin/users">
+<button class="blue-btn">View Users</button>
+</a>
+
+</section>
+
+</body>
+</html>

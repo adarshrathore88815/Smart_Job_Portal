@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Chatbot</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+<a href="/dashboard">Dashboard</a>
+<a href="/jobs">Jobs</a>
+<a href="/profile">Profile</a>
+</div>
+
+</nav>
+
+<section class="chat-page">
+
+<div class="chat-box">
+
+<h1>Smart Chatbot 🤖</h1>
+
+<div class="messages">
+
+{% if user_msg %}
+<div class="user-msg">{{ user_msg }}</div>
+{% endif %}
+
+{% if reply %}
+<div class="bot-msg">{{ reply }}</div>
+{% else %}
+<div class="bot-msg">
+Hello 👋 Ask me about jobs, python, salary, skills.
+</div>
+{% endif %}
+
+</div>
+
+<form method="POST" action="/chatbot" class="chat-form">
+
+<input type="text" name="msg" placeholder="Type your message..." required>
+
+<button type="submit" class="blue-btn">
+Send
+</button>
+
+<button type="button" onclick="startVoice()" class="blue-btn">
+🎤 Speak
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+
+<script>
+
+function startVoice(){
+
+const recognition = new webkitSpeechRecognition();
+
+recognition.lang = "en-IN";
+recognition.start();
+
+recognition.onresult = function(event){
+
+document.querySelector('input[name="msg"]').value =
+event.results[0][0].transcript;
+
+};
+
+}
+
+function speakText(text){
+
+const speech = new SpeechSynthesisUtterance(text);
+
+speech.lang = "en-US";
+speech.rate = 1;
+speech.pitch = 1;
+
+window.speechSynthesis.speak(speech);
+
+}
+
+window.onload = function(){
+
+let bot = document.querySelector(".bot-msg");
+
+if(bot){
+speakText(bot.innerText);
+}
+
+}
+
+</script>
+
+
+</body>
+</html>

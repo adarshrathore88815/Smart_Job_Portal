@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/dashboard">Dashboard</a>
+<a href="/jobs">Jobs</a>
+
+</div>
+
+</nav>
+
+<section class="login-page">
+
+<div class="login-box">
+
+<h1>User Profile</h1>
+
+<form method="POST" action="/profile" enctype="multipart/form-data">  
+
+<input type="text" name="name" required>
+<input type="email" name="email" required>
+<input type="text" name="skills" required>
+
+<input type="file" name="photo">
+<input type="file" name="resume">
+
+<button type="submit" class="blue-btn">Save Profile</button>
+
+
+</form>
+
+{% if user %}
+
+<hr style="margin:25px 0;">
+
+{% if user[5] %}
+<img src="/static/uploads/{{ user[5] }}"
+style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+{% endif %}
+
+<h3>{{ user[1] }}</h3>
+
+<p>{{ user[2] }}</p>
+
+<p><b>Skills:</b> {{ user[3] }}</p>
+
+{% if user[4] %}
+<p>
+<a href="/static/uploads/{{ user[4] }}" target="_blank">
+View Resume
+</a>
+</p>
+{% endif %}
+
+{% endif %}

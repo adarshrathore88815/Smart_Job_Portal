@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/">Home</a>
+<a href="/jobs">Jobs</a>
+<a href="/login" class="sign-btn">Logout</a>
+
+</div>
+
+</nav>
+
+<!-- Dashboard -->
+
+<section class="dashboard-page">
+
+<div class="welcome-box">
+
+<h1>Welcome Back 🚀</h1>
+<p>Manage your career opportunities from one place.</p>
+
+<a href="/jobs">
+<button class="blue-btn">Explore Jobs</button>
+</a>
+
+<a href="/profile">
+<button class="blue-btn">My Profile</button>
+</a>
+
+<a href="/resume-ai">
+<button class="blue-btn">AI Resume Analyzer</button>
+</a>
+
+<a href="/chatbot">
+<button class="blue-btn">Smart Chatbot</button>
+</a>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h2>25+</h2>
+<p>Jobs Applied</p>
+</div>
+
+<div class="stat-card">
+<h2>12</h2>
+<p>Interviews</p>
+</div>
+
+<div class="stat-card">
+<h2>8</h2>
+<p>Saved Jobs</p>
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

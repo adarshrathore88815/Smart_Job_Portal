@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applied Jobs</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+Smart<span>Portal</span>
+</div>
+
+<div class="nav-right">
+
+<a href="/dashboard">Dashboard</a>
+<a href="/jobs">Jobs</a>
+
+</div>
+
+</nav>
+
+<section class="jobs-page">
+
+<div class="jobs-left">
+
+<h2>Applied Jobs History</h2>
+
+{% for job in jobs %}
+
+<div class="job-box">
+
+<h3>{{ job[1] }}</h3>
+
+<p>📍 {{ job[2] }}</p>
+
+<p>💰 {{ job[3] }}</p>
+
+<p style="color:green;">✔ Applied Successfully</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+</body>
+</html>
