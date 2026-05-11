@@ -538,3 +538,16 @@ width:6px;
 background:#334155;
 border-radius:10px;
 }
+.footer{
+text-align:center;
+padding:18px;
+margin-top:40px;
+background:#0f172a;
+color:white;
+font-size:15px;
+border-top:1px solid #1e293b;
+}
+
+.footer b{
+color:#38bdf8;
+}
