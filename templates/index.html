@@ -3,108 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Job Portal</title>
+<title>CareerVerse AI</title>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 
 <body>
 
-<!-- Navbar -->
+<div id="loader">
 
-<nav class="navbar">
+<h1>CareerVerse AI 🚀</h1>
+<p>Loading Future...</p>
+
+</div>
+    
+<div class="particles">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+<div class="blur1"></div>
+<div class="blur2"></div>
+
+<nav class="navbar glass">
 
 <div class="logo">
-Smart<span>Portal</span>
+Career<span>Verse AI</span>
 </div>
 
 <div class="nav-right">
-
-<div class="nav-item">
-<i class="fa-solid fa-rocket"></i>
-<p>Top Content</p>
-</div>
-
-<div class="nav-item">
-<i class="fa-solid fa-user-group"></i>
-<p>People</p>
-</div>
-
-<div class="nav-item">
-<i class="fa-solid fa-book"></i>
-<p>Learning</p>
-</div>
-
-<div class="nav-item">
-<i class="fa-solid fa-briefcase"></i>
-<p>Jobs</p>
-</div>
-
-<div class="nav-item">
-<i class="fa-solid fa-puzzle-piece"></i>
-<p>Games</p>
-</div>
-
-<div class="nav-item">
-<i class="fa-solid fa-laptop"></i>
-<p>Get App</p>
-</div>
-
-<a href="/register" class="join-btn">Join now</a>
-
-<a href="/login" class="sign-btn">Sign in</a>
-
+<a href="#features">Features</a>
+<a href="#skills">Skills</a>
+<a href="/jobs">Jobs</a>
+<a href="/login" class="sign-btn">Login</a>
 </div>
 
 </nav>
 
-<!-- Hero -->
+<section class="hero premium-hero">
 
-<section class="hero-main">
+<div class="hero-left">
 
-<div class="left">
+<h1>Build Your Future With AI 🚀</h1>
 
-<h1>
-Explore jobs and grow your professional future
-</h1>
+<p class="typing-text">
+Find Jobs • Build Resume • Learn Skills • Grow Faster 🚀
+</p>
 
 <a href="/register">
-<button class="blue-btn">
-Continue with Google
-</button>
+<button class="blue-btn big-btn">Get Started Free</button>
 </a>
-
-<button class="white-btn">
-Continue with Microsoft
-</button>
-
-<a href="/login">
-<button class="white-btn">
-Sign in with Email
-</button>
-</a>
-
-<p class="terms">
-By clicking Continue, you agree to our Terms & Privacy Policy.
-</p>
 
 </div>
 
-<div class="right">
+<div class="hero-right">
 
-<img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+<div class="glass-card">
+<h3>💼 10K+ Jobs</h3>
+<p>Top companies hiring now</p>
+</div>
+
+<div class="glass-card">
+<h3>🤖 AI Assistant</h3>
+<p>Career chatbot support</p>
+</div>
+
+<div class="glass-card">
+<h3>📈 Growth</h3>
+<p>Learn in-demand skills</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="features" class="info-section">
+
+<h2>Why CareerVerse?</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h3>Resume AI</h3>
+<p>Boost your resume instantly</p>
+</div>
+
+<div class="stat-card">
+<h3>Smart Jobs</h3>
+<p>Daily fresh opportunities</p>
+</div>
+
+<div class="stat-card">
+<h3>Voice Chatbot</h3>
+<p>Talk and get guidance</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="logo-strip">
+
+<h2>Trusted By Top Companies</h2>
+
+<div class="logo-track">
+
+<span>Google</span>
+<span>Amazon</span>
+<span>TCS</span>
+<span>Infosys</span>
+<span>Wipro</span>
+<span>Microsoft</span>
+<span>Accenture</span>
+<span>IBM</span>
 
 </div>
 
 </section>
 
 <footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
+Made by <b>Adarsh Rathore</b> © 2026
 </footer>
+
+<div class="cursor-glow"></div>
+
+<script>
+
+const glow = document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove", (e)=>{
+
+glow.style.left = e.pageX + "px";
+glow.style.top = e.pageY + "px";
+
+});
+
+</script>
+
+<script>
+
+window.addEventListener("load", function(){
+
+setTimeout(function(){
+
+document.getElementById("loader").style.display = "none";
+
+}, 2000);
+
+});
+
+</script>
 
 </body>
 </html>
+
+# git add .
+ #git commit -m "first commit"
+ #git branch -M main
+ # git push

@@ -277,7 +277,7 @@ def chatbot():
 
     return render_template('chatbot.html', reply=reply, user_msg=msg)
              
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/admin-dashboard', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
         username = request.form['username']
@@ -288,7 +288,7 @@ def admin():
         else:
             return "<h1>Wrong Admin Login ❌</h1>"
 
-    return render_template('admin_login.html')
+    return render_template('admin_dashboard.html')
 
 conn = sqlite3.connect('database.db')
 cur = conn.cursor()
@@ -339,6 +339,39 @@ def admin_users():
     conn.close()
 
     return render_template('manage_users.html', users=data)
+
+@app.route('/manage-jobs')
+def manage_jobs():
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM jobs")
+    jobs = cur.fetchall()
+
+    conn.close()
+
+    return render_template('manage_jobs.html', jobs=jobs)
+
+@app.route('/delete-job/<int:id>')
+def delete_job(id):
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM jobs WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect('/admin')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

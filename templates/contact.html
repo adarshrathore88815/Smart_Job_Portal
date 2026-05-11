@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manage Jobs</title>
-
+<title>Contact Us</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -14,33 +13,31 @@
 <div class="logo">Smart<span>Portal</span></div>
 
 <div class="nav-right">
-<a href="/admin-dashboard">Dashboard</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/about">About</a>
 </div>
 </nav>
 
-<section class="dashboard-page">
+<section class="chat-page">
 
-<h1>Manage Jobs</h1>
+<div class="chat-box">
 
-{% for job in jobs %}
+<h1>Contact Us</h1>
 
-<div class="job-box">
+<p><b>Name:</b> Adarsh Rathore</p>
 
-<h3>{{ job[1] }}</h3>
-<p>{{ job[2] }}</p>
+<p><b>Email:</b> adarshrathore8815@gmail.com</p>
 
-<a href="/delete-job/{{ job[0] }}">
-<button class="blue-btn">Delete</button>
-</a>
+<p><b>Location:</b> Sehore, Madhya Pradesh</p>
+
+<p><b>Phone:</b> 8109533127</p>
 
 </div>
-
-{% endfor %}
 
 </section>
 
 <footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026
+Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
 </footer>
 
 </body>
