@@ -1,0 +1,174 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+color:white;
+min-height:100vh;
+}
+
+/* LAYOUT */
+
+.dashboard{
+display:grid;
+grid-template-columns:270px 1fr;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+padding:28px 22px;
+border-right:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(12px);
+}
+
+.brand{
+margin-bottom:35px;
+}
+
+.logo{
+width:58px;
+height:58px;
+border-radius:16px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+font-weight:800;
+background:linear-gradient(135deg,#38bdf8,#9333ea);
+margin-bottom:14px;
+}
+
+.brand h2{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.brand p{
+color:#94a3b8;
+}
+
+.sidebar a{
+display:block;
+padding:14px 16px;
+margin-bottom:10px;
+border-radius:14px;
+text-decoration:none;
+color:white;
+font-weight:700;
+transition:.3s;
+}
+
+.sidebar a:hover{
+background:rgba(255,255,255,.06);
+}
+
+/* MAIN */
+
+.main-content{
+padding:35px;
+}
+
+.topbar{
+margin-bottom:28px;
+}
+
+.topbar h1{
+font-size:42px;
+margin-bottom:8px;
+}
+
+.topbar p{
+color:#cbd5e1;
+}
+
+/* STATS */
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:22px;
+margin-bottom:30px;
+}
+
+.stat-card{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:28px;
+border-radius:22px;
+backdrop-filter:blur(12px);
+}
+
+.stat-card h3{
+font-size:34px;
+margin-bottom:10px;
+color:#38bdf8;
+}
+
+.stat-card p{
+color:#cbd5e1;
+}
+
+/* TABLE */
+
+.table-box{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:28px;
+border-radius:22px;
+overflow:auto;
+}
+
+.table-box h2{
+margin-bottom:18px;
+font-size:28px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:600px;
+}
+
+th,td{
+padding:16px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+color:#38bdf8;
+}
+
+td{
+color:#e2e8f0;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.dashboard{
+grid-template-columns:1fr;
+}
+
+.sidebar{
+border-right:none;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.main-content{
+padding:20px;
+}
+
+.topbar h1{
+font-size:34px;
+}
+
+}

@@ -3,59 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<title>Register | CareerVerse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 
 <body>
 
-<!-- Navbar -->
+<div class="register-page">
 
-<nav class="navbar">
+<div class="left-side">
 
-<div class="logo">
-Smart<span>Portal</span>
+<div class="brand">
+<div class="logo">CV</div>
+<h1>CareerVerse AI</h1>
+<p>Your AI-Powered Career Partner</p>
 </div>
 
-<div class="nav-right">
+<h2>Create Account 🚀</h2>
+<p class="sub">
+Join thousands of students and professionals growing with AI.
+</p>
 
-<a href="/">Home</a>
-<a href="/login" class="sign-btn">Sign in</a>
+<img src="https://cdn3d.iconscout.com/3d/premium/thumb/woman-working-on-laptop-6299382-5187866.png">
 
 </div>
 
-</nav>
+<div class="right-side">
 
-<!-- Register Section -->
+<form class="register-box" method="POST">
 
-<section class="login-page">
-
-<div class="login-box">
-
-<h1>Join SmartPortal</h1>
-<p>Create your account and start your career journey.</p>
-
-<form method="POST">
+<h2>Register</h2>
 
 <input type="text" name="name" placeholder="Full Name" required>
 
 <input type="email" name="email" placeholder="Email Address" required>
 
-<input type="password" name="password" placeholder="Password" required>
+<input type="password" name="password" placeholder="Create Password" required>
 
-<button type="submit" class="blue-btn">Join now</button>
+<input type="password" name="confirm" placeholder="Confirm Password" required>
+
+<button type="submit">Create Account</button>
+
+<p class="bottom-text">
+Already have an account?
+<a href="/login">Login</a>
+</p>
+
+<a href="/" class="back-home">← Back Home</a>
 
 </form>
 
-<div class="extra-text">
-Already have an account?
-<a href="/login">Sign in</a>
 </div>
 
 </div>
-
-</section>
 
 </body>
 </html>

@@ -4,161 +4,223 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CareerVerse AI</title>
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-<div id="loader">
-
-<h1>CareerVerse AI 🚀</h1>
-<p>Loading Future...</p>
-
+<nav class="navbar">
+<div class="logo-box">
+<div class="logo-icon">CV</div>
+<div>
+<h2>CareerVerse AI</h2>
+<p>Your AI-Powered Career Partner</p>
 </div>
-    
-<div class="particles">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
 </div>
 
-<div class="blur1"></div>
-<div class="blur2"></div>
-
-<nav class="navbar glass">
-
-<div class="logo">
-Career<span>Verse AI</span>
-</div>
-
-<div class="nav-right">
-<a href="#features">Features</a>
-<a href="#skills">Skills</a>
+<div class="nav-links">
+<a href="#">Home</a>
+<a href="#offer">Features</a>
+<a href="#">Skills</a>
 <a href="/jobs">Jobs</a>
-<a href="/login" class="sign-btn">Login</a>
+<a href="#about">About</a>
+<a href="/login" class="login-btn">Login</a>
 </div>
-
 </nav>
 
-<section class="hero premium-hero">
+<section class="hero">
+
 
 <div class="hero-left">
 
-<h1>Build Your Future With AI 🚀</h1>
+<div class="badge">🚀 AI-Powered Career Platform</div>
 
-<p class="typing-text">
-Find Jobs • Build Resume • Learn Skills • Grow Faster 🚀
+<h1>
+Grow Your Career <br>
+With <span>AI</span> 🤖
+</h1>
+
+<p>
+Find better jobs, build a strong resume, learn in-demand skills
+and get AI guidance — all in one place.
 </p>
 
-<a href="/register">
-<button class="blue-btn big-btn">Get Started Free</button>
-</a>
+<div class="hero-btns">
+<button class="blue-btn">Explore Jobs</button>
+<button class="dark-btn">Upload Resume</button>
+</div>
+
+<div class="trusted">
+<img src="https://randomuser.me/api/portraits/men/11.jpg">
+<img src="https://randomuser.me/api/portraits/women/22.jpg">
+<img src="https://randomuser.me/api/portraits/men/33.jpg">
+<img src="https://randomuser.me/api/portraits/women/44.jpg">
+<span>Trusted by 10,000+ students & professionals</span>
+</div>
 
 </div>
 
 <div class="hero-right">
 
-<div class="glass-card">
-<h3>💼 10K+ Jobs</h3>
-<p>Top companies hiring now</p>
+<div class="resume-box">
+<h4>Resume Score</h4>
+<h2 id="score-num">85<span>/100</span></h2>
+<div class="bar"><div class="fill"></div></div>
+<p>Good</p>
 </div>
 
-<div class="glass-card">
-<h3>🤖 AI Assistant</h3>
-<p>Career chatbot support</p>
+<div class="skills-box">
+<h4>Top Skills</h4>
+
+<div class="skill-row">
+<span class="skill">Python</span>
+<div class="line"><div class="linefill w1"></div></div>
 </div>
 
-<div class="glass-card">
-<h3>📈 Growth</h3>
-<p>Learn in-demand skills</p>
+<div class="skill-row">
+<span class="skill">SQL</span>
+<div class="line"><div class="linefill w2"></div></div>
+</div>
+
+<div class="skill-row">
+<span class="skill">React</span>
+<div class="line"><div class="linefill w3"></div></div>
+</div>
+
+<div class="skill-row">
+<span class="skill">AI/ML</span>
+<div class="line"><div class="linefill w4"></div></div>
+</div>
+
+</div>
+
+<img src="https://randomuser.me/api/portraits/men/32.jpg"
+class="hero-img"
+id="hero-photo">
+
+<div class="chat-box">
+<h4>🤖 AI Assistant</h4>
+<p>How can I help you today?</p>
+</div>
+
+<div class="stat-side s1">💼 10K+ Jobs</div>
+<div class="stat-side s2">👥 5K+ Companies</div>
+<div class="stat-side s3">🎓 15K+ Students</div>
+<div class="stat-side s4">⭐ 98% Success</div>
+
+</div>
+
+</section>
+
+<section class="offer-sec">
+
+<h2>What We Offer</h2>
+
+<div class="bottom-grid">
+
+<div class="offer-cards">
+
+<div class="offer-card">
+<h3>🔍 Smart Job Search</h3>
+<p>Find the right job from top companies.</p>
+<a href="#">Learn More →</a>
+</div>
+
+<div class="offer-card">
+<h3>📄 Resume Booster</h3>
+<p>AI-powered resume analysis and improvement.</p>
+<a href="#">Learn More →</a>
+</div>
+
+<div class="offer-card">
+<h3>🎓 Skill Development</h3>
+<p>Learn in-demand skills and boost your career.</p>
+<a href="#">Learn More →</a>
+</div>
+
+<div class="offer-card">
+<h3>🤖 AI Career Assistant</h3>
+<p>Get instant answers and career guidance.</p>
+<a href="#">Learn More →</a>
+</div>
+
+</div>
+
+<div class="work-box">
+
+<h3>How It Works</h3>
+
+<p>1️⃣ Create your free account</p>
+<p>2️⃣ Build or upload your resume</p>
+<p>3️⃣ Find jobs & improve skills</p>
+<p>4️⃣ Get hired & grow your career</p>
+
 </div>
 
 </div>
 
 </section>
 
-<section id="features" class="info-section">
 
-<h2>Why CareerVerse?</h2>
+<section class="companies-sec">
 
-<div class="stats-grid">
+<h2>Top Companies Hiring</h2>
 
-<div class="stat-card">
-<h3>Resume AI</h3>
-<p>Boost your resume instantly</p>
-</div>
+<div class="logo-row">
 
-<div class="stat-card">
-<h3>Smart Jobs</h3>
-<p>Daily fresh opportunities</p>
-</div>
-
-<div class="stat-card">
-<h3>Voice Chatbot</h3>
-<p>Talk and get guidance</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="logo-strip">
-
-<h2>Trusted By Top Companies</h2>
-
-<div class="logo-track">
-
-<span>Google</span>
-<span>Amazon</span>
-<span>TCS</span>
-<span>Infosys</span>
-<span>Wipro</span>
-<span>Microsoft</span>
-<span>Accenture</span>
-<span>IBM</span>
+<img src="https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png">
+<img src="https://1000logos.net/wp-content/uploads/2021/04/Microsoft-logo.png">
+<img src="https://1000logos.net/wp-content/uploads/2016/10/Amazon-logo-meaning.jpg">
+<img src="https://1000logos.net/wp-content/uploads/2017/02/IBM-logo.png">
+<img src="https://1000logos.net/wp-content/uploads/2020/08/Infosys-Logo.png">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Wipro_Primary_Logo_Color_RGB.png">
+<img src="https://1000logos.net/wp-content/uploads/2016/10/Accenture-logo.png">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Tata_logo.svg">
 
 </div>
 
 </section>
 
 <footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026
+CareerVerse AI © 2026 | Made by Adarsh Rathore
 </footer>
 
-<div class="cursor-glow"></div>
-
 <script>
 
-const glow = document.querySelector(".cursor-glow");
+const photos = [
+"https://randomuser.me/api/portraits/men/32.jpg",
+"https://randomuser.me/api/portraits/women/44.jpg",
+"https://randomuser.me/api/portraits/men/76.jpg",
+"https://randomuser.me/api/portraits/women/65.jpg"
+];
 
-document.addEventListener("mousemove", (e)=>{
+const scores = [85,92,78,96];
 
-glow.style.left = e.pageX + "px";
-glow.style.top = e.pageY + "px";
+const skills = [
+["Python","SQL","React","AI/ML"],
+["UI/UX","Figma","JavaScript","Design"],
+["C++","DSA","Flask","MySQL"],
+["Java","NodeJS","MongoDB","Cloud"]
+];
 
+let i = 0;
+
+setInterval(() => {
+
+i = (i + 1) % photos.length;
+
+document.getElementById("hero-photo").src = photos[i];
+
+document.getElementById("score-num").innerHTML =
+scores[i] + "<span>/100</span>";
+
+const skillTags = document.querySelectorAll(".skill");
+
+skillTags.forEach((tag,index)=>{
+tag.innerText = skills[i][index];
 });
 
-</script>
-
-<script>
-
-window.addEventListener("load", function(){
-
-setTimeout(function(){
-
-document.getElementById("loader").style.display = "none";
-
-}, 2000);
-
-});
+},3000);
 
 </script>
 

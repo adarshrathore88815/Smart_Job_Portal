@@ -3,77 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<title>Admin Dashboard | CareerVerse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 
 <body>
 
-<!-- Navbar -->
+<div class="dashboard">
 
-<nav class="navbar">
+<aside class="sidebar">
 
-<div class="logo">
-Smart<span>Portal</span>
+<div class="brand">
+<div class="logo">CV</div>
+<h2>CareerVerse</h2>
+<p>Admin Panel</p>
 </div>
 
-<div class="nav-right">
+<a href="/">🏠 Home</a>
+<a href="/jobs">💼 Jobs</a>
+<a href="/login">🔐 Login</a>
+<a href="/register">📝 Register</a>
+<a href="#">📊 Analytics</a>
+<a href="#">⚙ Settings</a>
 
-<a href="/">Home</a>
-<a href="/admin" class="sign-btn">Logout</a>
+</aside>
 
-</div>
+<main class="main-content">
 
-</nav>
-
-<!-- Admin Panel -->
-
-<section class="dashboard-page">
-
-<div class="welcome-box">
-
-<h1>Welcome Admin 👑</h1>
-<p>Manage jobs, users and portal activities.</p>
-
-<a href="/add-job">
-<button class="blue-btn">Add New Job</button>
-</a>
-
+<div class="topbar">
+<h1>Dashboard</h1>
+<p>Welcome Admin 👋</p>
 </div>
 
 <div class="stats-grid">
 
 <div class="stat-card">
-<h2>152</h2>
+<h3>10,540+</h3>
 <p>Total Users</p>
 </div>
 
 <div class="stat-card">
-<h2>18</h2>
-<p>Active Jobs</p>
+<h3>5,220+</h3>
+<p>Jobs Posted</p>
 </div>
 
 <div class="stat-card">
-<h2>74</h2>
-<p>Applications</p>
+<h3>1,890+</h3>
+<p>Companies</p>
+</div>
+
+<div class="stat-card">
+<h3>98%</h3>
+<p>Success Rate</p>
 </div>
 
 </div>
 
-<br>
+<div class="table-box">
 
-<a href="/admin/users">
-<button class="blue-btn">View Users</button>
-</a>
+<h2>Recent Users</h2>
 
-<br><br>
+<table>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+</tr>
 
-<a href="/manage-jobs">
-<button class="blue-btn">Manage Jobs</button>
-</a>
+<tr>
+<td>Adarsh</td>
+<td>adarsh@gmail.com</td>
+<td>Active</td>
+</tr>
 
-</section>
+<tr>
+<td>Rahul</td>
+<td>rahul@gmail.com</td>
+<td>Active</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>priya@gmail.com</td>
+<td>Pending</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>aman@gmail.com</td>
+<td>Active</td>
+</tr>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
 
 </body>
 </html>

@@ -3,84 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobs</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<title>Jobs | CareerVerse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jobs.css') }}">
 </head>
 
 <body>
 
-<!-- Navbar -->
-
-<nav class="navbar">
-
-<div class="logo">
-Smart<span>Portal</span>
-</div>
-
-<div class="nav-right">
-
+<nav class="top-nav">
+<a href="/" class="logo">CV</a>
+<div class="nav-links">
 <a href="/">Home</a>
-<a href="/dashboard">Dashboard</a>
-<a href="/login" class="sign-btn">Logout</a>
-
+<a href="/login">Login</a>
+<a href="/register">Register</a>
 </div>
-
 </nav>
 
-<!-- Jobs Section -->
+<section class="jobs-hero">
+<h1>Find Your Dream Job 💼</h1>
+<p>Explore top companies hiring now with AI-powered career support.</p>
 
-<section class="jobs-page">
+<div class="search-box">
+<input type="text" placeholder="Search jobs, skills, company...">
+<button>Search</button>
+</div>
+</section>
 
-<div class="jobs-left">
+<section class="jobs-grid">
 
-<h2>Recommended Jobs</h2>
-
-<form method="GET" action="/jobs">
-
-<input type="text" name="search" placeholder="Search jobs..." style="width:70%; padding:12px; border-radius:8px; border:1px solid #ccc;">
-
-<button type="submit" style="width:25%;">Search</button>
-
-</form>
-
-<br>
-
-{% for job in jobs %}
-
-<div class="job-box">
-
-<h3>{{ job[1] }}</h3>
-
-<p>📍 {{ job[2] }}</p>
-
-<p>💰 {{ job[3] }}</p>
-
-<a href="/apply/{{ job[1] }}/{{ job[2] }}/{{ job[3] }}">
-<button class="blue-btn">Apply Now</button>
-</a>
-
+<div class="job-card">
+<h3>Python Developer</h3>
+<p>Google • Remote • ₹8 LPA</p>
+<a href="#">Apply Now</a>
 </div>
 
-{% endfor %}
-
+<div class="job-card">
+<h3>Frontend Developer</h3>
+<p>Microsoft • Hybrid • ₹7 LPA</p>
+<a href="#">Apply Now</a>
 </div>
 
-<div class="jobs-right">
-
-<div class="side-box">
-<h3>Career Tips 🚀</h3>
-<p>Update resume regularly.</p>
-<p>Apply daily for better chances.</p>
-<p>Build LinkedIn profile.</p>
+<div class="job-card">
+<h3>Data Analyst</h3>
+<p>Amazon • Bengaluru • ₹9 LPA</p>
+<a href="#">Apply Now</a>
 </div>
 
+<div class="job-card">
+<h3>UI/UX Designer</h3>
+<p>Infosys • Remote • ₹6 LPA</p>
+<a href="#">Apply Now</a>
+</div>
+
+<div class="job-card">
+<h3>Java Developer</h3>
+<p>TCS • Pune • ₹5.5 LPA</p>
+<a href="#">Apply Now</a>
+</div>
+
+<div class="job-card">
+<h3>AI Engineer</h3>
+<p>IBM • Remote • ₹12 LPA</p>
+<a href="#">Apply Now</a>
 </div>
 
 </section>
 
 <footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
+CareerVerse AI © 2026 | Made by Adarsh Rathore
 </footer>
 
 </body>

@@ -3,92 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>CareerVerse AI Dashboard</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+color:white;
+}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+margin-left:22px;
+font-weight:bold;
+}
+
+.container{
+padding:50px 60px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:35px;
+}
+
+.top h1{
+font-size:52px;
+margin-bottom:8px;
+}
+
+.top p{
+font-size:20px;
+color:#cbd5e1;
+}
+
+.profile{
+display:flex;
+align-items:center;
+gap:15px;
+background:rgba(255,255,255,.05);
+padding:15px 20px;
+border-radius:18px;
+}
+
+.profile img{
+width:60px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:35px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:28px;
+border-radius:18px;
+}
+
+.card h2{
+font-size:40px;
+color:#38bdf8;
+margin-bottom:8px;
+}
+
+.section{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:22px;
+margin-bottom:30px;
+}
+
+.box{
+background:rgba(255,255,255,.05);
+padding:25px;
+border-radius:18px;
+}
+
+.box h3{
+margin-bottom:16px;
+font-size:26px;
+}
+
+.job{
+padding:12px 0;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.job:last-child{
+border:none;
+}
+
+.tag{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:#1e293b;
+margin:6px;
+}
+
+.footer{
+text-align:center;
+padding:24px;
+background:#020617;
+margin-top:40px;
+color:#94a3b8;
+}
+
+@media(max-width:900px){
+
+.navbar{
+flex-direction:column;
+gap:15px;
+padding:20px;
+}
+
+.container{
+padding:25px 20px;
+}
+
+.top h1{
+font-size:38px;
+}
+
+.section{
+grid-template-columns:1fr;
+}
+
+}
+</style>
 </head>
 
 <body>
 
-<!-- Navbar -->
+<div class="navbar">
+<div class="logo">CareerVerse AI</div>
 
-<nav class="navbar">
-
-<div class="logo">
-Smart<span>Portal</span>
-</div>
-
-<div class="nav-right">
-
+<div class="nav-links">
 <a href="/">Home</a>
 <a href="/jobs">Jobs</a>
-<a href="/login" class="sign-btn">Logout</a>
+<a href="/profile">Profile</a>
+<a href="/logout">Logout</a>
+</div>
+</div>
+
+<div class="container">
+
+<div class="top">
+
+<div>
+<h1>Welcome {{ session['user'] }} 🚀</h1>
+<p>Your smart career dashboard is ready.</p>
+</div>
+
+<div class="profile">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<div>
+<h3>{{ session['user'] }}</h3>
+<p style="color:#cbd5e1;">Active User</p>
+</div>
+</div>
 
 </div>
 
-</nav>
+<div class="grid">
 
-<!-- Dashboard -->
-
-<section class="dashboard-page">
-
-<div class="welcome-box">
-
-<h1>Welcome Back 🚀</h1>
-<p>Manage your career opportunities from one place.</p>
-
-<a href="/jobs">
-<button class="blue-btn">Explore Jobs</button>
-</a>
-
-<a href="/profile">
-<button class="blue-btn">My Profile</button>
-</a>
-
-<a href="/resume-ai">
-<button class="blue-btn">AI Resume Analyzer</button>
-</a>
-
-<a href="/chatbot">
-<button class="blue-btn">Smart Chatbot</button>
-</a>
-
-<a href="/about">
-<button class="blue-btn">About Us</button>
-</a>
-
-<br><br>
-
-<a href="/contact">
-<button class="blue-btn">Contact Us</button>
-</a>
-
-</div>
-
-<div class="stats-grid">
-
-<div class="stat-card">
-<h2>25+</h2>
+<div class="card">
+<h2>{{ applied_count }}</h2>
 <p>Jobs Applied</p>
 </div>
 
-<div class="stat-card">
-<h2>12</h2>
-<p>Interviews</p>
+<div class="card">
+<h2>{{ jobs_count }}</h2>
+<p>Total Jobs</p>
 </div>
 
-<div class="stat-card">
-<h2>8</h2>
-<p>Saved Jobs</p>
+<div class="card">
+<h2>92%</h2>
+<p>Resume Score</p>
+</div>
+
+<div class="card">
+<h2>{{ users_count }}</h2>
+<p>Total Users</p>
 </div>
 
 </div>
 
-</section>
+<div class="section">
 
-<footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
-</footer>
+<div class="box">
+<h3>💼 Latest Jobs</h3>
+
+{% for job in jobs %}
+<div class="job">
+<b>{{ job[1] }}</b><br>
+{{ job[2] }} • {{ job[3] }}
+</div>
+{% endfor %}
+
+</div>
+
+<div class="box">
+<h3>🔥 Top Skills</h3>
+
+<div class="tag">Python</div>
+<div class="tag">Flask</div>
+<div class="tag">SQL</div>
+<div class="tag">HTML</div>
+<div class="tag">CSS</div>
+<div class="tag">Communication</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+Made by <b>Adarsh Rathore</b> © 2026 | CareerVerse AI
+</div>
 
 </body>
 </html>

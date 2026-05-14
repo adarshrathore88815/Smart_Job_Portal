@@ -1,22 +1,40 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import os
-from flask import Flask, render_template, request, redirect
-import sqlite3
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
-
 app.secret_key = "smartportal123"
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
 if not os.path.exists('static/uploads'):
     os.makedirs('static/uploads')
 
+# =========================
+# DATABASE INIT
+# =========================
+
 conn = sqlite3.connect('database.db')
 cur = conn.cursor()
 
-# Applied Jobs Table
+cur.execute("""
+CREATE TABLE IF NOT EXISTS users(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+name TEXT,
+email TEXT,
+password TEXT
+)
+""")
+
+cur.execute("""
+CREATE TABLE IF NOT EXISTS jobs(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+title TEXT,
+location TEXT,
+salary TEXT
+)
+""")
+
 cur.execute("""
 CREATE TABLE IF NOT EXISTS applied_jobs(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,7 +44,6 @@ salary TEXT
 )
 """)
 
-# Profile Table
 cur.execute("""
 CREATE TABLE IF NOT EXISTS profile(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,13 +58,23 @@ photo TEXT
 conn.commit()
 conn.close()
 
+# =========================
+# HOME
+# =========================
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/register', methods=['GET', 'POST'])
+# =========================
+# REGISTER
+# =========================
+
+@app.route('/register', methods=['GET','POST'])
 def register():
+
     if request.method == 'POST':
+
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
@@ -55,8 +82,10 @@ def register():
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT)")
-        cur.execute("INSERT INTO users(name,email,password) VALUES(?,?,?)", (name,email,password))
+        cur.execute(
+        "INSERT INTO users(name,email,password) VALUES(?,?,?)",
+        (name,email,password)
+        )
 
         conn.commit()
         conn.close()
@@ -65,47 +94,112 @@ def register():
 
     return render_template('register.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+# =========================
+# LOGIN
+# =========================
+
+@app.route('/login', methods=['GET','POST'])
 def login():
+
     if request.method == 'POST':
+
         email = request.form['email']
         password = request.form['password']
 
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM users WHERE email=? AND password=?", (email,password))
-        user = cur.fetchone()
+        cur.execute(
+        "SELECT * FROM users WHERE email=? AND password=?",
+        (email,password)
+        )
 
+        user = cur.fetchone()
         conn.close()
 
         if user:
-           return render_template('dashboard.html')
+            session["user"] = user[1]
+            return redirect('/dashboard')
+
         else:
             return "<h1>Invalid Login ❌</h1>"
 
     return render_template('login.html')
 
-    
- 
+# =========================
+# DASHBOARD
+# =========================
+
+@app.route('/dashboard')
+def dashboard():
+
+    if "user" not in session:
+        return redirect('/login')
+
+    return render_template('dashboard.html')
+
+# =========================
+# LOGOUT
+# =========================
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
+# =========================
+# JOBS
+# =========================
+
 @app.route('/jobs')
 def jobs():
 
-    search = request.args.get('search', '')
+    search = request.args.get('search','')
 
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
     cur.execute(
-       "SELECT * FROM jobs WHERE title LIKE ? OR location LIKE ? OR salary LIKE ?",
-        ('%'+search+'%', '%'+search+'%', '%'+search+'%')
+    "SELECT * FROM jobs WHERE title LIKE ? OR location LIKE ? OR salary LIKE ?",
+    ('%'+search+'%','%'+search+'%','%'+search+'%')
     )
 
     jobs_data = cur.fetchall()
-
     conn.close()
 
     return render_template('jobs.html', jobs=jobs_data)
+
+# =========================
+# ADD JOB
+# =========================
+
+@app.route('/add-job', methods=['GET','POST'])
+def add_job():
+
+    if request.method == 'POST':
+
+        title = request.form['title']
+        location = request.form['location']
+        salary = request.form['salary']
+
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+
+        cur.execute(
+        "INSERT INTO jobs(title,location,salary) VALUES(?,?,?)",
+        (title,location,salary)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect('/jobs')
+
+    return render_template('post_job.html')
+
+# =========================
+# APPLY JOB
+# =========================
 
 @app.route('/apply/<title>/<location>/<salary>')
 def apply_job(title, location, salary):
@@ -114,38 +208,20 @@ def apply_job(title, location, salary):
     cur = conn.cursor()
 
     cur.execute(
-        "INSERT INTO applied_jobs(job_title, location, salary) VALUES(?,?,?)",
-        (title, location, salary)
+    "INSERT INTO applied_jobs(job_title,location,salary) VALUES(?,?,?)",
+    (title,location,salary)
     )
 
     conn.commit()
     conn.close()
 
-    return redirect('/history')
+    return redirect('/dashboard')
 
-# 👇 YAHAN ADD KARO
-@app.route('/apply', methods=['GET', 'POST'])
-def apply():
-    if request.method == 'POST':
-        name = request.form['name']
-        file = request.files['resume']
+# =========================
+# PROFILE
+# =========================
 
-        if file:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-
-        return "<h1>Job Applied Successfully 🚀</h1>"
-
-    return render_template('apply.html')
-
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
-
-
-# 👇 ISKE NICHE PASTE KARO
-
-
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET','POST'])
 def profile():
 
     conn = sqlite3.connect('database.db')
@@ -172,13 +248,11 @@ def profile():
             resume.save(os.path.join(app.config['UPLOAD_FOLDER'], resume_name))
 
         cur.execute(
-            "INSERT INTO profile(name,email,skills,resume,photo) VALUES(?,?,?,?,?)",
-            (name, email, skills, resume_name, photo_name)
+        "INSERT INTO profile(name,email,skills,resume,photo) VALUES(?,?,?,?,?)",
+        (name,email,skills,resume_name,photo_name)
         )
 
         conn.commit()
-
-        return redirect('/profile')
 
     cur.execute("SELECT * FROM profile ORDER BY id DESC LIMIT 1")
     user = cur.fetchone()
@@ -187,7 +261,11 @@ def profile():
 
     return render_template('profile.html', user=user)
 
-@app.route('/resume-ai', methods=['GET', 'POST'])
+# =========================
+# RESUME AI
+# =========================
+
+@app.route('/resume-ai', methods=['GET','POST'])
 def resume_ai():
 
     score = 0
@@ -198,7 +276,7 @@ def resume_ai():
 
         text = request.form['resume'].lower()
 
-        keywords = ['python', 'html', 'css', 'sql', 'flask', 'java']
+        keywords = ['python','html','css','sql','flask','java']
 
         for word in keywords:
             if word in text:
@@ -218,13 +296,17 @@ def resume_ai():
             score = 100
 
     return render_template(
-        'resume_ai.html',
-        score=score,
-        skills=skills,
-        suggestions=suggestions
+    'resume_ai.html',
+    score=score,
+    skills=skills,
+    suggestions=suggestions
     )
- 
-@app.route('/chatbot', methods=['GET', 'POST'])
+
+# =========================
+# CHATBOT
+# =========================
+
+@app.route('/chatbot', methods=['GET','POST'])
 def chatbot():
 
     reply = ""
@@ -232,138 +314,43 @@ def chatbot():
 
     if request.method == 'POST':
 
-        msg = request.form.get('msg', '').lower().strip()
+        msg = request.form['msg'].lower()
 
-        # Name save
-        if 'my name is' in msg:
-            name = msg.replace('my name is', '').strip()
-            session['name'] = name.title()
-            reply = f"😊 Nice to meet you {session['name']}!"
-
-        elif 'mera naam' in msg:
-            name = msg.replace('mera naam', '').strip()
-            session['name'] = name.title()
-            reply = f"😊 Namaste {session['name']}!"
-
-        elif any(x in msg for x in ['hello','hi','hey']):
-            if 'name' in session:
-                reply = f"👋 Hello {session['name']}! Main aapki help ke liye hu."
-            else:
-                reply = "👋 Hello! Main Smart Career Bot hu."
-
-        elif 'company' in msg and 'job' in msg:
-            reply = "🏢 Achhi company ke liye Python, SQL, Projects, Communication aur interview prep karo."
+        if 'hello' in msg or 'hi' in msg:
+            reply = "👋 Hello! Main Career Bot hu."
 
         elif 'job' in msg:
-            reply = "💼 Daily apply karo, resume strong rakho aur skills improve karo."
+            reply = "💼 Daily apply karo aur resume strong rakho."
 
         elif 'salary' in msg:
-            reply = "💰 Fresher salary ₹3-6 LPA se start ho sakti hai."
+            reply = "💰 Fresher salary ₹3-6 LPA ho sakti hai."
 
         elif 'python' in msg:
-            reply = "🐍 Python AI, Backend, Automation ke liye excellent hai."
+            reply = "🐍 Python best skill hai."
 
         elif 'resume' in msg:
-            reply = "📄 Resume me projects, skills aur internships add karo."
-
-        elif 'thank' in msg:
-            if 'name' in session:
-                reply = f"😊 Welcome {session['name']}!"
-            else:
-                reply = "😊 Welcome!"
+            reply = "📄 Resume me projects aur skills add karo."
 
         else:
-            reply = "🤖 Aap job, salary, python, company, resume puch sakte ho."
+            reply = "🤖 Aap job, salary, python, resume puch sakte ho."
 
-    return render_template('chatbot.html', reply=reply, user_msg=msg)
-             
-@app.route('/admin-dashboard', methods=['GET', 'POST'])
+    return render_template(
+    'chatbot.html',
+    reply=reply,
+    user_msg=msg
+    )
+
+# =========================
+# ADMIN
+# =========================
+
+@app.route('/admin')
 def admin():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    return render_template('admin.html')
 
-        if username == 'admin' and password == 'admin123':
-            return render_template('admin_dashboard.html')
-        else:
-            return "<h1>Wrong Admin Login ❌</h1>"
-
-    return render_template('admin_dashboard.html')
-
-conn = sqlite3.connect('database.db')
-cur = conn.cursor()
-
-cur.execute("""
-CREATE TABLE IF NOT EXISTS jobs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    location TEXT,
-    salary TEXT
-)
-""")
-
-conn.commit()
-conn.close()
-
-@app.route('/add-job', methods=['GET', 'POST'])
-def add_job():
-
-    if request.method == 'POST':
-        title = request.form['title']
-        location = request.form['location']
-        salary = request.form['salary']
-
-        conn = sqlite3.connect('database.db')
-        cur = conn.cursor()
-
-        cur.execute(
-            "INSERT INTO jobs(title, location, salary) VALUES(?,?,?)",
-            (title, location, salary)
-        )
-
-        conn.commit()
-        conn.close()
-
-        return redirect('/jobs')
-
-    return render_template('post_job.html')
-
-@app.route('/admin/users')
-def admin_users():
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-
-    cur.execute("SELECT * FROM users")
-    data = cur.fetchall()
-
-    conn.close()
-
-    return render_template('manage_users.html', users=data)
-
-@app.route('/manage-jobs')
-def manage_jobs():
-
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-
-    cur.execute("SELECT * FROM jobs")
-    jobs = cur.fetchall()
-
-    conn.close()
-
-    return render_template('manage_jobs.html', jobs=jobs)
-
-@app.route('/delete-job/<int:id>')
-def delete_job(id):
-
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-
-    cur.execute("DELETE FROM jobs WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-
-    return redirect('/admin')
+# =========================
+# ABOUT / CONTACT
+# =========================
 
 @app.route('/about')
 def about():
@@ -372,6 +359,10 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+# =========================
+# RUN
+# =========================
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -3,58 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<title>Login | CareerVerse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 
 <body>
 
-<!-- Navbar -->
+<div class="login-page">
 
-<nav class="navbar">
+<div class="left-side">
 
-<div class="logo">
-Smart<span>Portal</span>
+<div class="brand">
+<div class="logo">CV</div>
+<h1>CareerVerse AI</h1>
+<p>Your AI-Powered Career Partner</p>
 </div>
 
-<div class="nav-right">
+<h2>Welcome Back 👋</h2>
+<p class="sub">
+Login to continue your job search, resume building and career growth.
+</p>
 
-<a href="/">Home</a>
-<a href="/register" class="join-btn">Join now</a>
-<a href="/login" class="sign-btn">Sign in</a>
+<img src="https://cdn3d.iconscout.com/3d/premium/thumb/man-working-on-laptop-6299381-5187865.png">
 
 </div>
 
-</nav>
+<div class="right-side">
 
-<!-- Login Section -->
+<form class="login-box" method="POST">
 
-<section class="login-page">
+<h2>Login</h2>
 
-<div class="login-box">
+<input type="email" name="email" placeholder="Enter Email" required>
 
-<h1>Sign in</h1>
-<p>Stay updated on your professional world.</p>
+<input type="password" name="password" placeholder="Enter Password" required>
 
-<form method="POST">
+<div class="row">
+<label><input type="checkbox"> Remember me</label>
+<a href="#">Forgot Password?</a>
+</div>
 
-<input type="email" name="email" placeholder="Email Address" required>
+<button type="submit">Login Now</button>
 
-<input type="password" name="password" placeholder="Password" required>
+<p class="bottom-text">
+Don't have an account?
+<a href="/register">Create Account</a>
+</p>
 
-<button type="submit" class="blue-btn">Sign in</button>
+<a href="/" class="back-home">← Back Home</a>
 
 </form>
 
-<div class="extra-text">
-New to SmartPortal?
-<a href="/register">Join now</a>
 </div>
 
 </div>
-
-</section>
 
 </body>
 </html>
