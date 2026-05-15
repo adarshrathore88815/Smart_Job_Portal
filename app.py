@@ -1,7 +1,18 @@
+from pydoc import text
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
+from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
+from docx import Document
+from PyPDF2 import PdfReader
+
+def check_login():
+
+    if 'user' not in session:
+        return False
+
+    return True
 
 app = Flask(__name__)
 app.secret_key = "smartportal123"
@@ -38,9 +49,13 @@ salary TEXT
 cur.execute("""
 CREATE TABLE IF NOT EXISTS applied_jobs(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
+username TEXT,
 job_title TEXT,
+company TEXT,
 location TEXT,
-salary TEXT
+salary TEXT,
+status TEXT,
+apply_date TEXT
 )
 """)
 
@@ -154,6 +169,9 @@ def logout():
 @app.route('/jobs')
 def jobs():
 
+    if not check_login():
+        return redirect('/login')
+
     search = request.args.get('search','')
 
     conn = sqlite3.connect('database.db')
@@ -165,9 +183,11 @@ def jobs():
     )
 
     jobs_data = cur.fetchall()
+
     conn.close()
 
     return render_template('jobs.html', jobs=jobs_data)
+
 
 # =========================
 # ADD JOB
@@ -201,28 +221,121 @@ def add_job():
 # APPLY JOB
 # =========================
 
-@app.route('/apply/<title>/<location>/<salary>')
-def apply_job(title, location, salary):
+
+
+@app.route('/apply/<title>/<company>/<location>/<salary>')
+def apply_job(title, company, location, salary):
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    username = session['user']
 
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
+    # TABLE
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS applicants(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    title TEXT,
+    company TEXT,
+    location TEXT,
+    salary TEXT,
+    status TEXT,
+    apply_date TEXT
+    )
+    """)
+
+    # CHECK ALREADY APPLIED
+
     cur.execute(
-    "INSERT INTO applied_jobs(job_title,location,salary) VALUES(?,?,?)",
-    (title,location,salary)
+    "SELECT * FROM applicants WHERE username=? AND title=?",
+    (username, title)
+    )
+
+    already = cur.fetchone()
+
+    if already:
+
+        conn.close()
+
+        return """
+        <h1 style='font-family:Arial;text-align:center;margin-top:100px;color:red;'>
+        ⚠ Already Applied
+        </h1>
+        """
+
+    # DATE
+
+    apply_date = datetime.now().strftime("%d %B %Y")
+
+    # INSERT
+
+    cur.execute("""
+    INSERT INTO applicants(
+    username,
+    title,
+    company,
+    location,
+    salary,
+    status,
+    apply_date
+    )
+
+    VALUES(?,?,?,?,?,?,?)
+    """,
+
+    (
+    username,
+    title,
+    company,
+    location,
+    salary,
+    "Applied ✅",
+    apply_date
+    )
     )
 
     conn.commit()
     conn.close()
 
-    return redirect('/dashboard')
+    return render_template(
+    'apply.html',
+    title=title,
+    company=company,
+    location=location,
+    salary=salary
+    )
 
-# =========================
-# PROFILE
-# =========================
+
+@app.route('/applicants')
+def applicants():
+
+    if 'admin' not in session:
+        return redirect('/admin-login')
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM applicants")
+
+    data = cur.fetchall()
+
+    conn.close()
+
+    return render_template(
+    'applicants.html',
+    applicants=data
+    )
 
 @app.route('/profile', methods=['GET','POST'])
 def profile():
+
+    if not check_login():
+        return redirect('/login')
 
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
@@ -261,45 +374,161 @@ def profile():
 
     return render_template('profile.html', user=user)
 
+
+@app.route('/applied-jobs')
+def applied_jobs():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    username = session['user']
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute(
+    "SELECT * FROM applied_jobs WHERE username=?",
+    (username,)
+    )
+
+    jobs = cur.fetchall()
+
+    conn.close()
+
+    return render_template('applied_jobs.html', jobs=jobs)
+
+
 # =========================
 # RESUME AI
 # =========================
 
-@app.route('/resume-ai', methods=['GET','POST'])
+@app.route('/resume-ai', methods=['GET', 'POST'])
 def resume_ai():
 
+
+    if not check_login():
+        return redirect('/login')
+    
     score = 0
     skills = []
     suggestions = []
 
     if request.method == 'POST':
 
-        text = request.form['resume'].lower()
+        file = request.files.get('resume_file')
 
-        keywords = ['python','html','css','sql','flask','java']
+        text = ""
 
-        for word in keywords:
-            if word in text:
-                skills.append(word)
+        if file and file.filename != "":
+
+            filename = file.filename.lower()
+
+            try:
+
+                # PDF
+                if filename.endswith('.pdf'):
+
+                    pdf = PdfReader(file)
+
+                    for page in pdf.pages:
+
+                        page_text = page.extract_text()
+
+                        if page_text:
+                            text += page_text
+
+                # DOCX
+                elif filename.endswith('.docx'):
+
+                    doc = Document(file)
+
+                    for para in doc.paragraphs:
+                        text += para.text
+
+                # TXT
+                elif filename.endswith('.txt'):
+
+                    text = file.read().decode('utf-8')
+
+            except:
+                text = ""
+
+            text = text.lower()
+
+            keywords = [
+                'python',
+                'html',
+                'css',
+                'sql',
+                'flask',
+                'java',
+                'javascript',
+                'react',
+                'mysql',
+                'machine learning',
+                'ai',
+                'c++'
+            ]
+
+            for word in keywords:
+
+                if word in text:
+                    skills.append(word)
+                    score += 8
+
+            # EXTRA SCORE
+
+            if 'project' in text:
                 score += 15
 
-        if 'project' not in text:
-            suggestions.append("Add Projects Section")
+            if 'experience' in text:
+                score += 15
 
-        if 'experience' not in text:
-            suggestions.append("Add Experience Section")
+            if 'education' in text:
+                score += 10
 
-        if 'summary' not in text:
-            suggestions.append("Add Professional Summary")
+            if 'skills' in text:
+                score += 10
 
-        if score > 100:
-            score = 100
+            # LIMIT
+
+            if score > 100:
+                score = 100
+
+            # AI SUGGESTIONS
+
+            if 'project' not in text:
+                suggestions.append("❌ Add Projects Section to show practical experience.")
+
+            if 'experience' not in text:
+                suggestions.append("❌ Add Internship or Experience section.")
+
+            if 'summary' not in text:
+                suggestions.append("❌ Add Professional Summary at top.")
+
+            if 'skills' not in text:
+                suggestions.append("❌ Add Technical Skills section.")
+
+            if 'github' not in text:
+                suggestions.append("❌ Add GitHub profile link.")
+
+            if 'linkedin' not in text:
+                suggestions.append("❌ Add LinkedIn profile link.")
+
+            if 'certificate' not in text:
+                suggestions.append("❌ Add Certifications section.")
+
+            if len(skills) < 4:
+                suggestions.append("⚠ Add more technical skills for better ATS score.")
+
+            if score >= 80:
+                suggestions.append("✅ Excellent Resume for fresher jobs.")
 
     return render_template(
-    'resume_ai.html',
-    score=score,
-    skills=skills,
-    suggestions=suggestions
+        'resume_ai.html',
+        score=score,
+        skills=skills,
+        suggestions=suggestions
     )
 
 # =========================
@@ -308,6 +537,9 @@ def resume_ai():
 
 @app.route('/chatbot', methods=['GET','POST'])
 def chatbot():
+
+    if not check_login():
+        return redirect('/login')
 
     reply = ""
     msg = ""
@@ -344,9 +576,97 @@ def chatbot():
 # ADMIN
 # =========================
 
-@app.route('/admin')
-def admin():
-    return render_template('admin.html')
+# =========================
+# ADMIN LOGIN
+# =========================
+
+@app.route('/admin-login', methods=['GET', 'POST'])
+def admin_login():
+
+    if request.method == 'POST':
+
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if username == 'admin' and password == 'admin123':
+
+            session['admin'] = 'admin'
+
+            return redirect('/admin-dashboard')
+
+        else:
+            return "Wrong Admin Login ❌"
+
+    return render_template('admin_login.html')
+
+
+
+
+# =========================
+# ADMIN DASHBOARD
+# =========================
+
+@app.route('/admin-dashboard')
+def admin_dashboard():
+
+     if 'admin' not in session:
+        return redirect('/admin-login')
+
+     return render_template('admin_dashboard.html')
+
+
+# =========================
+# MANAGE JOBS
+# =========================
+
+@app.route('/manage-jobs')
+def manage_jobs():
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM jobs")
+    jobs = cur.fetchall()
+
+    conn.close()
+
+    return render_template('manage_jobs.html', jobs=jobs)
+
+
+# =========================
+# DELETE JOB
+# =========================
+
+@app.route('/delete-job/<int:id>')
+def delete_job(id):
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM jobs WHERE id=?", (id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect('/manage-jobs')
+
+
+# =========================
+# MANAGE USERS
+# =========================
+
+@app.route('/admin/users')
+def admin_users():
+
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users")
+    users = cur.fetchall()
+
+    conn.close()
+
+    return render_template('manage_users.html', users=users)
 
 # =========================
 # ABOUT / CONTACT

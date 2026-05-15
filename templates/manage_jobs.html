@@ -1,47 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manage Jobs</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+padding:40px;
+}
+
+h1{
+font-size:50px;
+margin-bottom:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+}
+
+th,td{
+padding:18px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-align:left;
+}
+
+th{
+background:#1e293b;
+}
+
+a{
+padding:10px 18px;
+border-radius:10px;
+background:red;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.back{
+display:inline-block;
+margin-top:30px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+}
+
+</style>
 </head>
 
 <body>
 
-<nav class="navbar">
-<div class="logo">Smart<span>Portal</span></div>
+<h1>💼 Manage Jobs</h1>
 
-<div class="nav-right">
-<a href="/admin-dashboard">Dashboard</a>
-</div>
-</nav>
+<table>
 
-<section class="dashboard-page">
-
-<h1>Manage Jobs</h1>
+<tr>
+<th>ID</th>
+<th>Title</th>
+<th>Location</th>
+<th>Salary</th>
+<th>Action</th>
+</tr>
 
 {% for job in jobs %}
 
-<div class="job-box">
+<tr>
 
-<h3>{{ job[1] }}</h3>
-<p>{{ job[2] }}</p>
+<td>{{ job[0] }}</td>
+<td>{{ job[1] }}</td>
+<td>{{ job[2] }}</td>
+<td>{{ job[3] }}</td>
+
+<td>
 
 <a href="/delete-job/{{ job[0] }}">
-<button class="blue-btn">Delete</button>
+Delete
 </a>
 
-</div>
+</td>
+
+</tr>
 
 {% endfor %}
 
-</section>
+</table>
 
-<footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026
-</footer>
+<a href="/admin-dashboard" class="back">
+⬅ Back Dashboard
+</a>
 
 </body>
 </html>

@@ -1,104 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard | CareerVerse AI</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+<title>Admin Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+color:white;
+min-height:100vh;
+padding:40px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.topbar h1{
+font-size:52px;
+font-weight:800;
+}
+
+.logout{
+padding:14px 24px;
+border-radius:14px;
+background:linear-gradient(90deg,#ef4444,#dc2626);
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-bottom:40px;
+}
+
+.stat-box{
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.stat-box:hover{
+transform:translateY(-8px);
+box-shadow:0 0 25px rgba(56,189,248,.18);
+}
+
+.stat-box h2{
+font-size:45px;
+margin-bottom:10px;
+}
+
+.stat-box p{
+color:#cbd5e1;
+font-size:18px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:35px;
+border-radius:26px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 30px rgba(147,51,234,.18);
+}
+
+.card h2{
+font-size:34px;
+margin-bottom:16px;
+}
+
+.card p{
+color:#cbd5e1;
+line-height:1.8;
+font-size:17px;
+margin-bottom:24px;
+}
+
+.btn{
+display:inline-block;
+padding:15px 24px;
+border-radius:14px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+text-decoration:none;
+font-weight:bold;
+font-size:16px;
+}
+
+.bottom{
+margin-top:50px;
+text-align:center;
+color:#94a3b8;
+font-size:15px;
+}
+
+@media(max-width:768px){
+
+body{
+padding:20px;
+}
+
+.topbar h1{
+font-size:38px;
+}
+
+.card h2{
+font-size:28px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="dashboard">
-
-<aside class="sidebar">
-
-<div class="brand">
-<div class="logo">CV</div>
-<h2>CareerVerse</h2>
-<p>Admin Panel</p>
-</div>
-
-<a href="/">🏠 Home</a>
-<a href="/jobs">💼 Jobs</a>
-<a href="/login">🔐 Login</a>
-<a href="/register">📝 Register</a>
-<a href="#">📊 Analytics</a>
-<a href="#">⚙ Settings</a>
-
-</aside>
-
-<main class="main-content">
-
 <div class="topbar">
-<h1>Dashboard</h1>
-<p>Welcome Admin 👋</p>
-</div>
 
-<div class="stats-grid">
+<h1>👑 Admin Dashboard</h1>
 
-<div class="stat-card">
-<h3>10,540+</h3>
-<p>Total Users</p>
-</div>
-
-<div class="stat-card">
-<h3>5,220+</h3>
-<p>Jobs Posted</p>
-</div>
-
-<div class="stat-card">
-<h3>1,890+</h3>
-<p>Companies</p>
-</div>
-
-<div class="stat-card">
-<h3>98%</h3>
-<p>Success Rate</p>
-</div>
+<a href="/logout" class="logout">
+Logout
+</a>
 
 </div>
 
-<div class="table-box">
+<!-- STATS -->
 
-<h2>Recent Users</h2>
+<div class="stats">
 
-<table>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Status</th>
-</tr>
+<div class="stat-box">
+<h2>💼 120+</h2>
+<p>Total Jobs Posted</p>
+</div>
 
-<tr>
-<td>Adarsh</td>
-<td>adarsh@gmail.com</td>
-<td>Active</td>
-</tr>
+<div class="stat-box">
+<h2>👥 450+</h2>
+<p>Registered Users</p>
+</div>
 
-<tr>
-<td>Rahul</td>
-<td>rahul@gmail.com</td>
-<td>Active</td>
-</tr>
+<div class="stat-box">
+<h2>📄 300+</h2>
+<p>Resume Uploaded</p>
+</div>
 
-<tr>
-<td>Priya</td>
-<td>priya@gmail.com</td>
-<td>Pending</td>
-</tr>
-
-<tr>
-<td>Aman</td>
-<td>aman@gmail.com</td>
-<td>Active</td>
-</tr>
-
-</table>
+<div class="stat-box">
+<h2>🤖 AI</h2>
+<p>Career Assistant Active</p>
+</div>
 
 </div>
 
-</main>
+<!-- MAIN CARDS -->
+
+<div class="grid">
+
+<div class="card">
+
+<h2>💼 Add Jobs</h2>
+
+<p>
+Admin can post new jobs for students and freshers with salary,
+location and company details.
+</p>
+
+<a href="/add-job" class="btn">
+Open Section
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🗑 Manage Jobs</h2>
+
+<p>
+Delete jobs, manage vacancies and control all job postings
+from admin panel.
+</p>
+
+<a href="/manage-jobs" class="btn">
+Manage Jobs
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>👥 Manage Users</h2>
+
+<p>
+See all registered users, students and applicants using
+the Smart Job Portal.
+</p>
+
+<a href="/admin/users" class="btn">
+View Users
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>📄 Resume AI</h2>
+
+<p>
+AI Resume Analyzer checks skills, ATS score and gives
+smart suggestions for better placement.
+</p>
+
+<a href="/resume-ai" class="btn">
+Open Resume AI
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🤖 AI Chatbot</h2>
+
+<p>
+AI Career Assistant helps students with jobs, salary,
+resume and interview guidance.
+</p>
+
+<a href="/chatbot" class="btn">
+Open Chatbot
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>👥 Applicants</h2>
+
+<p>
+See all users who applied for jobs.
+</p>
+
+<a href="/applicants" class="btn">
+View Applicants
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>👤 User Profiles</h2>
+
+<p>
+Check uploaded resumes, profile photos and skills
+submitted by users.
+</p>
+
+<a href="/profile" class="btn">
+View Profiles
+</a>
+
+</div>
+
+</div>
+
+<div class="bottom">
+
+Smart Job Portal Admin Panel © 2026
 
 </div>
 

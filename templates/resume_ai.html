@@ -5,63 +5,624 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Resume Analyzer</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+min-height:100vh;
+padding:50px 20px;
+color:white;
+overflow-x:hidden;
+}
+
+.heading{
+text-align:center;
+margin-bottom:50px;
+}
+
+.heading h1{
+font-size:80px;
+font-weight:800;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:15px;
+}
+
+.heading p{
+font-size:24px;
+color:#cbd5e1;
+}
+
+.main-box{
+max-width:1400px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+}
+
+.left-box,
+.right-box{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:35px;
+padding:40px;
+backdrop-filter:blur(12px);
+box-shadow:0 0 25px rgba(56,189,248,.10);
+}
+
+.upload-box{
+border:3px dashed #38bdf8;
+border-radius:30px;
+padding:60px 30px;
+text-align:center;
+background:#0f172a;
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+
+.upload-box:hover{
+transform:scale(1.02);
+box-shadow:0 0 35px rgba(56,189,248,.20);
+}
+
+.upload-box input{
+position:absolute;
+width:100%;
+height:100%;
+left:0;
+top:0;
+opacity:0;
+cursor:pointer;
+}
+
+.upload-box h2{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.upload-box p{
+font-size:22px;
+color:#cbd5e1;
+}
+
+.analyze-btn{
+width:100%;
+margin-top:30px;
+padding:22px;
+border:none;
+border-radius:18px;
+font-size:26px;
+font-weight:bold;
+cursor:pointer;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+transition:.3s;
+}
+
+.analyze-btn:hover{
+transform:translateY(-5px);
+}
+
+.score-circle{
+width:270px;
+height:270px;
+border-radius:50%;
+margin:10px auto 30px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:70px;
+font-weight:bold;
+position:relative;
+background:
+conic-gradient(#38bdf8 0% {{score}}%, #1e293b {{score}}% 100%);
+animation:rotate 2s ease;
+}
+
+.score-circle::before{
+content:"";
+position:absolute;
+width:210px;
+height:210px;
+background:#0f172a;
+border-radius:50%;
+}
+
+.score-circle span{
+position:relative;
+z-index:5;
+}
+
+@keyframes rotate{
+from{
+transform:rotate(-180deg) scale(.5);
+opacity:0;
+}
+to{
+transform:rotate(0deg) scale(1);
+opacity:1;
+}
+}
+
+.score-title{
+text-align:center;
+font-size:42px;
+margin-bottom:35px;
+}
+
+.section-title{
+font-size:38px;
+margin-bottom:22px;
+margin-top:35px;
+}
+
+.skills{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.skill{
+padding:14px 24px;
+border-radius:40px;
+background:#1e293b;
+font-size:20px;
+font-weight:bold;
+}
+
+.suggestion{
+background:#1e293b;
+padding:20px;
+border-radius:18px;
+margin-bottom:16px;
+font-size:20px;
+line-height:1.7;
+border-left:5px solid #38bdf8;
+}
+
+.good{
+border-left:5px solid #22c55e;
+}
+
+.bad{
+border-left:5px solid #ef4444;
+}
+
+.tip-box{
+margin-top:35px;
+padding:30px;
+border-radius:25px;
+background:linear-gradient(135deg,#1e1b4b,#111827);
+}
+
+.tip-box h2{
+font-size:40px;
+margin-bottom:18px;
+}
+
+.tip-box p{
+font-size:21px;
+line-height:1.9;
+color:#e2e8f0;
+margin-bottom:10px;
+}
+
+.back-btn{
+display:inline-block;
+margin-top:30px;
+padding:16px 28px;
+background:#0f172a;
+border-radius:16px;
+text-decoration:none;
+font-size:22px;
+font-weight:bold;
+color:white;
+}
+
+@media(max-width:1000px){
+
+.main-box{
+grid-template-columns:1fr;
+}
+
+.heading h1{
+font-size:50px;
+}
+
+.heading p{
+font-size:18px;
+}
+
+.upload-box h2{
+font-size:34px;
+}
+
+.score-circle{
+width:220px;
+height:220px;
+font-size:50px;
+}
+
+.score-circle::before{
+width:170px;
+height:170px;
+}
+
+}
+
+.upload-box{
+position:relative;
+width:100%;
+}
+
+.upload-box input{
+display:none;
+}
+
+.upload-label{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:70px 30px;
+border:3px dashed #38bdf8;
+border-radius:30px;
+background:#0f172a;
+cursor:pointer;
+transition:.4s;
+}
+
+.upload-label:hover{
+transform:scale(1.02);
+box-shadow:0 0 30px rgba(56,189,248,.25);
+background:#131c31;
+}
+
+.upload-icon{
+font-size:70px;
+margin-bottom:20px;
+}
+
+.upload-label h2{
+font-size:42px;
+margin-bottom:12px;
+}
+
+.upload-label p{
+font-size:20px;
+color:#cbd5e1;
+margin-bottom:25px;
+}
+
+.browse-btn{
+padding:16px 30px;
+border-radius:14px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+font-size:20px;
+font-weight:bold;
+color:white;
+}
+
+@media(max-width:768px){
+
+.upload-label{
+padding:45px 20px;
+}
+
+.upload-label h2{
+font-size:30px;
+}
+
+.upload-label p{
+font-size:16px;
+}
+
+.upload-icon{
+font-size:50px;
+}
+
+}
+
+.upload-label p{
+transition:.3s;
+}
+
+.score-circle{
+box-shadow:
+0 0 30px rgba(56,189,248,.25),
+0 0 60px rgba(147,51,234,.15);
+}
+
+.skill{
+transition:.3s;
+}
+
+.skill:hover{
+transform:translateY(-5px) scale(1.05);
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+}
+
+.suggestion{
+transition:.3s;
+}
+
+.suggestion:hover{
+transform:translateX(8px);
+}
+
+.bg-blur{
+position:fixed;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+opacity:.35;
+animation:move 10s infinite alternate;
+}
+
+.b1{
+width:300px;
+height:300px;
+background:#38bdf8;
+top:-100px;
+left:-100px;
+}
+
+.b2{
+width:350px;
+height:350px;
+background:#9333ea;
+right:-100px;
+top:200px;
+}
+
+.b3{
+width:250px;
+height:250px;
+background:#22c55e;
+bottom:-100px;
+left:40%;
+}
+
+@keyframes move{
+
+0%{
+transform:translateY(0px);
+}
+
+100%{
+transform:translateY(40px);
+}
+
+}
+
+.left-box,
+.right-box{
+transition:.4s;
+}
+
+.left-box:hover,
+.right-box:hover{
+transform:translateY(-8px);
+box-shadow:0 0 40px rgba(56,189,248,.15);
+}
+
+.analyze-btn{
+position:relative;
+overflow:hidden;
+}
+
+.analyze-btn::before{
+content:'';
+position:absolute;
+width:40px;
+height:250%;
+background:rgba(255,255,255,.4);
+top:-100px;
+left:-120px;
+transform:rotate(25deg);
+animation:shine 3s infinite;
+}
+
+@keyframes shine{
+
+100%{
+left:140%;
+}
+
+}
+
+.tip-box{
+box-shadow:0 0 25px rgba(147,51,234,.15);
+}
+
+.score-title{
+font-weight:800;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+</style>
 </head>
 
 <body>
 
-<nav class="navbar">
-<div class="logo">Smart<span>Portal</span></div>
+<div class="bg-blur b1"></div>
+<div class="bg-blur b2"></div>
+<div class="bg-blur b3"></div>
 
-<div class="nav-right">
-<a href="/dashboard">Dashboard</a>
-<a href="/profile">Profile</a>
+<div class="heading">
+<h1>🤖 AI Resume Analyzer</h1>
+<p>Upload Resume and get AI Score, Skills & Suggestions</p>
 </div>
-</nav>
 
-<section class="login-page">
+<div class="main-box">
 
-<div class="login-box">
+<!-- LEFT -->
 
-<h1>AI Resume Analyzer 🤖</h1>
+<div class="left-box">
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
+<div class="upload-box">
 
-<textarea name="resume"
-placeholder="Paste your resume text here..."
-style="width:100%;height:180px;padding:15px;border-radius:10px;"></textarea>
+<input 
+type="file"
+id="resume_file"
+name="resume_file"
+accept=".pdf,.docx,.txt"
+required>
 
-<br><br>
+<label for="resume_file" class="upload-label">
 
-<button type="submit" class="blue-btn">Analyze Resume</button>
+<div class="upload-icon">
+📄
+</div>
+
+<h2>
+Upload Your Resume
+</h2>
+
+<p>
+Click Here To Select PDF, DOCX or TXT File
+</p>
+
+<div class="browse-btn">
+Choose File
+</div>
+
+</label>
+
+</div>
+ 
+<button class="analyze-btn">
+🚀 Analyze Resume
+</button>
 
 </form>
 
-{% if score > 0 %}
+<a href="/dashboard" class="back-btn">
+⬅ Back Dashboard
+</a>
 
-<hr style="margin:25px 0;">
+</div>
 
-<h2>Resume Score: {{ score }}/100</h2>
+<!-- RIGHT -->
 
-<p><b>Skills Found:</b>
-{% for s in skills %}
-{{ s }},
+<div class="right-box">
+
+<div class="score-circle">
+<span>{{score}}%</span>
+</div>
+
+<h2 class="score-title">
+Resume Match Score
+</h2>
+
+<h2 class="section-title">
+🔥 Detected Skills
+</h2>
+
+<div class="skills">
+
+{% if skills %}
+
+{% for skill in skills %}
+<div class="skill">
+{{skill}}
+</div>
 {% endfor %}
-</p>
 
-<p><b>Suggestions:</b></p>
+{% else %}
 
-<ul>
-{% for sug in suggestions %}
-<li>{{ sug }}</li>
-{% endfor %}
-</ul>
+<div class="skill">
+No Skills Found
+</div>
 
 {% endif %}
 
 </div>
 
-</section>
+<h2 class="section-title">
+📄 AI Suggestions
+</h2>
+
+{% if suggestions %}
+
+{% for s in suggestions %}
+
+<div class="suggestion bad">
+❌ {{s}}
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="suggestion good">
+✅ Excellent Resume Structure Detected
+</div>
+
+{% endif %}
+
+<div class="tip-box">
+
+<h2>
+🤖 AI Career Tips
+</h2>
+
+{% if score >= 80 %}
+
+<p>✅ Your resume is highly attractive for recruiters.</p>
+<p>🚀 You are suitable for Python Developer & Full Stack roles.</p>
+<p>💼 Start applying in top companies now.</p>
+
+{% elif score >= 50 %}
+
+<p>⚡ Your resume is average but can improve more.</p>
+<p>📄 Add strong projects and internship experience.</p>
+<p>🎯 Improve technical keywords for better ATS score.</p>
+
+{% else %}
+
+<p>❌ Your resume needs improvement.</p>
+<p>📌 Add skills, projects, certifications and summary.</p>
+<p>💡 Use professional formatting and proper sections.</p>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const fileInput = document.getElementById("resume_file");
+
+fileInput.addEventListener("change", function(){
+
+if(this.files.length > 0){
+
+document.querySelector(".upload-label p").innerHTML =
+"✅ " + this.files[0].name;
+
+}
+
+});
+
+</script>
 
 </body>
 </html>

@@ -3,113 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Chatbot</title>
+<title>AI Career Chatbot</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.chat-container{
+width:420px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:25px;
+backdrop-filter:blur(10px);
+}
+
+.top{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:25px;
+}
+
+.bot{
+width:60px;
+height:60px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#9333ea);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+}
+
+.chat-box{
+background:#0f172a;
+padding:18px;
+border-radius:18px;
+margin-bottom:20px;
+min-height:140px;
+}
+
+.user{
+margin-bottom:14px;
+color:#38bdf8;
+font-weight:bold;
+}
+
+.reply{
+line-height:1.7;
+color:#e2e8f0;
+}
+
+form{
+display:flex;
+gap:12px;
+}
+
+input{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+border-radius:14px;
+background:#1e293b;
+color:white;
+}
+
+button{
+padding:14px 22px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.back{
+display:block;
+margin-top:18px;
+text-align:center;
+color:#38bdf8;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
-<nav class="navbar">
+<div class="chat-container">
 
-<div class="logo">
-Smart<span>Portal</span>
+<div class="top">
+
+<div class="bot">
+🤖
 </div>
 
-<div class="nav-right">
-<a href="/dashboard">Dashboard</a>
-<a href="/jobs">Jobs</a>
-<a href="/profile">Profile</a>
+<div>
+<h2>AI Career Bot</h2>
+<p>Ask anything about jobs & skills</p>
 </div>
 
-</nav>
-
-<section class="chat-page">
+</div>
 
 <div class="chat-box">
 
-<h1>Smart Chatbot 🤖</h1>
-
-<div class="messages">
-
 {% if user_msg %}
-<div class="user-msg">{{ user_msg }}</div>
-{% endif %}
-
-{% if reply %}
-<div class="bot-msg">{{ reply }}</div>
-{% else %}
-<div class="bot-msg">
-Hello 👋 Ask me about jobs, python, salary, skills.
+<div class="user">
+You: {{ user_msg }}
 </div>
 {% endif %}
 
+<div class="reply">
+{{ reply }}
 </div>
 
-<form method="POST" action="/chatbot" class="chat-form">
+</div>
 
-<input type="text" name="msg" placeholder="Type your message..." required>
+<form method="POST">
 
-<button type="submit" class="blue-btn">
+<input type="text"
+name="msg"
+placeholder="Ask something..."
+required>
+
+<button type="submit">
 Send
-</button>
-
-<button type="button" onclick="startVoice()" class="blue-btn">
-🎤 Speak
 </button>
 
 </form>
 
+<a href="/dashboard" class="back">
+⬅ Back Dashboard
+</a>
+
 </div>
-
-</section>
-
-
-<script>
-
-function startVoice(){
-
-const recognition = new webkitSpeechRecognition();
-
-recognition.lang = "en-IN";
-recognition.start();
-
-recognition.onresult = function(event){
-
-document.querySelector('input[name="msg"]').value =
-event.results[0][0].transcript;
-
-};
-
-}
-
-function speakText(text){
-
-const speech = new SpeechSynthesisUtterance(text);
-
-speech.lang = "en-US";
-speech.rate = 1;
-speech.pitch = 1;
-
-window.speechSynthesis.speak(speech);
-
-}
-
-window.onload = function(){
-
-let bot = document.querySelector(".bot-msg");
-
-if(bot){
-speakText(bot.innerText);
-}
-
-}
-
-</script>
-
-<footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
-</footer>
 
 </body>
 </html>

@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CareerVerse AI Dashboard</title>
+<title>AI Dashboard - CareerVerse AI</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -16,7 +17,10 @@ font-family:Arial, Helvetica, sans-serif;
 body{
 background:linear-gradient(135deg,#050816,#0b1026,#111827);
 color:white;
+overflow-x:hidden;
 }
+
+/* NAVBAR */
 
 .navbar{
 display:flex;
@@ -24,11 +28,13 @@ justify-content:space-between;
 align-items:center;
 padding:20px 60px;
 border-bottom:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.02);
+backdrop-filter:blur(10px);
 }
 
 .logo{
 font-size:30px;
-font-weight:bold;
+font-weight:800;
 background:linear-gradient(90deg,#38bdf8,#9333ea);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
@@ -38,12 +44,16 @@ background:linear-gradient(90deg,#38bdf8,#9333ea);
 color:white;
 text-decoration:none;
 margin-left:22px;
-font-weight:bold;
+font-weight:700;
 }
 
+/* MAIN */
+
 .container{
-padding:50px 60px;
+padding:40px 60px;
 }
+
+/* TOP */
 
 .top{
 display:flex;
@@ -56,7 +66,7 @@ margin-bottom:35px;
 
 .top h1{
 font-size:52px;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .top p{
@@ -69,70 +79,168 @@ display:flex;
 align-items:center;
 gap:15px;
 background:rgba(255,255,255,.05);
-padding:15px 20px;
-border-radius:18px;
+padding:14px 20px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
 }
 
 .profile img{
-width:60px;
-height:60px;
+width:65px;
+height:65px;
 border-radius:50%;
 object-fit:cover;
+border:3px solid #38bdf8;
 }
+
+/* GRID */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:22px;
 margin-bottom:35px;
 }
 
 .card{
 background:rgba(255,255,255,.05);
 padding:28px;
-border-radius:18px;
+border-radius:22px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 20px rgba(56,189,248,.15);
 }
 
 .card h2{
-font-size:40px;
+font-size:42px;
 color:#38bdf8;
 margin-bottom:8px;
 }
 
+.card p{
+color:#cbd5e1;
+}
+
+/* SECTION */
+
 .section{
 display:grid;
 grid-template-columns:2fr 1fr;
-gap:22px;
-margin-bottom:30px;
+gap:24px;
+margin-bottom:35px;
 }
 
 .box{
 background:rgba(255,255,255,.05);
-padding:25px;
-border-radius:18px;
+padding:26px;
+border-radius:22px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
 }
 
 .box h3{
+font-size:28px;
+margin-bottom:18px;
+}
+
+/* JOBS */
+
+.job-card{
+padding:18px;
+border-radius:16px;
+background:rgba(255,255,255,.04);
 margin-bottom:16px;
-font-size:26px;
+border:1px solid rgba(255,255,255,.06);
 }
 
-.job{
-padding:12px 0;
-border-bottom:1px solid rgba(255,255,255,.08);
+.job-card h4{
+font-size:22px;
+margin-bottom:8px;
 }
 
-.job:last-child{
-border:none;
+.job-card p{
+color:#cbd5e1;
+margin-bottom:10px;
 }
 
-.tag{
+.apply-btn{
 display:inline-block;
-padding:8px 14px;
-border-radius:20px;
-background:#1e293b;
-margin:6px;
+padding:10px 18px;
+border-radius:12px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+text-decoration:none;
+font-weight:bold;
 }
+
+/* SKILLS */
+
+.skill{
+margin-bottom:18px;
+}
+
+.skill p{
+margin-bottom:8px;
+}
+
+.bar{
+height:10px;
+background:#1e293b;
+border-radius:20px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+}
+
+/* AI BOX */
+
+.ai-box{
+background:linear-gradient(135deg,#1e1b4b,#0f172a);
+padding:24px;
+border-radius:22px;
+margin-top:25px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.ai-box p{
+margin-bottom:14px;
+line-height:1.7;
+color:#e2e8f0;
+}
+
+/* CHATBOT */
+
+.chatbot{
+position:fixed;
+right:25px;
+bottom:25px;
+width:75px;
+height:75px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#9333ea);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+cursor:pointer;
+box-shadow:0 0 20px rgba(56,189,248,.4);
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+50%{
+transform:translateY(-10px);
+}
+}
+
+/* FOOTER */
 
 .footer{
 text-align:center;
@@ -141,6 +249,8 @@ background:#020617;
 margin-top:40px;
 color:#94a3b8;
 }
+
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -163,52 +273,54 @@ grid-template-columns:1fr;
 }
 
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
+
 <div class="navbar">
+
 <div class="logo">CareerVerse AI</div>
 
 <div class="nav-links">
 <a href="/">Home</a>
 <a href="/jobs">Jobs</a>
 <a href="/profile">Profile</a>
+<a href="/resume-ai">Resume AI</a>
 <a href="/logout">Logout</a>
 </div>
+
 </div>
 
+<!-- MAIN -->
+
 <div class="container">
+
+<!-- TOP -->
 
 <div class="top">
 
 <div>
 <h1>Welcome {{ session['user'] }} 🚀</h1>
-<p>Your smart career dashboard is ready.</p>
+<p>Your AI-powered career dashboard is ready.</p>
 </div>
 
 <div class="profile">
 <img src="https://randomuser.me/api/portraits/men/32.jpg">
 <div>
 <h3>{{ session['user'] }}</h3>
-<p style="color:#cbd5e1;">Active User</p>
+<p style="color:#cbd5e1;">AI Career Member</p>
 </div>
 </div>
 
 </div>
+
+<!-- STATS -->
 
 <div class="grid">
-
-<div class="card">
-<h2>{{ applied_count }}</h2>
-<p>Jobs Applied</p>
-</div>
-
-<div class="card">
-<h2>{{ jobs_count }}</h2>
-<p>Total Jobs</p>
-</div>
 
 <div class="card">
 <h2>92%</h2>
@@ -216,41 +328,129 @@ grid-template-columns:1fr;
 </div>
 
 <div class="card">
-<h2>{{ users_count }}</h2>
-<p>Total Users</p>
+<h2>15+</h2>
+<p>Jobs Recommended</p>
+</div>
+
+<div class="card">
+<h2>8</h2>
+<p>Skills Matched</p>
+</div>
+
+<div class="card">
+<h2>4</h2>
+<p>Interviews Scheduled</p>
 </div>
 
 </div>
+
+<!-- JOBS + SKILLS -->
 
 <div class="section">
 
-<div class="box">
-<h3>💼 Latest Jobs</h3>
-
-{% for job in jobs %}
-<div class="job">
-<b>{{ job[1] }}</b><br>
-{{ job[2] }} • {{ job[3] }}
-</div>
-{% endfor %}
-
-</div>
+<!-- JOBS -->
 
 <div class="box">
-<h3>🔥 Top Skills</h3>
 
-<div class="tag">Python</div>
-<div class="tag">Flask</div>
-<div class="tag">SQL</div>
-<div class="tag">HTML</div>
-<div class="tag">CSS</div>
-<div class="tag">Communication</div>
+<h3>💼 AI Recommended Jobs</h3>
+
+<div class="job-card">
+<h4>Python Developer</h4>
+<p>Infosys • Indore • ₹5.5 LPA</p>
+<a href="/jobs" class="apply-btn">Apply Now</a>
+</div>
+
+<div class="job-card">
+<h4>Flask Backend Developer</h4>
+<p>TCS • Remote • ₹6 LPA</p>
+<a href="/jobs" class="apply-btn">Apply Now</a>
+</div>
+
+<div class="job-card">
+<h4>Software Engineer</h4>
+<p>Accenture • Pune • ₹7 LPA</p>
+<a href="/jobs" class="apply-btn">Apply Now</a>
+</div>
+
+<div class="job-card">
+<h4>AI/ML Intern</h4>
+<p>Wipro • Bangalore • ₹4 LPA</p>
+<a href="/jobs" class="apply-btn">Apply Now</a>
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div>
+
+<div class="box">
+
+<h3>📈 Skill Analysis</h3>
+
+<div class="skill">
+<p>Python</p>
+<div class="bar">
+<div class="fill" style="width:92%"></div>
+</div>
+</div>
+
+<div class="skill">
+<p>Flask</p>
+<div class="bar">
+<div class="fill" style="width:85%"></div>
+</div>
+</div>
+
+<div class="skill">
+<p>SQL</p>
+<div class="bar">
+<div class="fill" style="width:78%"></div>
+</div>
+</div>
+
+<div class="skill">
+<p>Communication</p>
+<div class="bar">
+<div class="fill" style="width:70%"></div>
+</div>
+</div>
+
+</div>
+
+<!-- AI SUGGESTIONS -->
+
+<div class="ai-box">
+
+<h3 style="margin-bottom:15px;">🤖 AI Suggestions</h3>
+
+<p>✅ Your Python skill is very strong.</p>
+
+<p>⚡ Learn React to unlock more frontend jobs.</p>
+
+<p>📄 Add more real projects in resume.</p>
+
+<p>🎯 Apply for backend & AI internships.</p>
+
+<p>🚀 You are matching 82% with top jobs.</p>
 
 </div>
 
 </div>
 
 </div>
+
+</div>
+
+<!-- CHATBOT -->
+
+<a href="/chatbot" class="chatbot">
+🤖
+</a>
+
+
+
+<!-- FOOTER -->
 
 <div class="footer">
 Made by <b>Adarsh Rathore</b> © 2026 | CareerVerse AI

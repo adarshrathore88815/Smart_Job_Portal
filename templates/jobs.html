@@ -1,76 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobs | CareerVerse AI</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/jobs.css') }}">
+
+<title>Jobs</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+color:white;
+padding:40px;
+min-height:100vh;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.top h1{
+font-size:55px;
+font-weight:800;
+}
+
+.search-box{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.search-box input{
+padding:14px 18px;
+width:300px;
+border:none;
+outline:none;
+border-radius:14px;
+background:#1e293b;
+color:white;
+font-size:16px;
+}
+
+.search-box button{
+padding:14px 24px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.jobs-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+}
+
+.job-card{
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.job-card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 30px rgba(56,189,248,.18);
+}
+
+.company{
+display:inline-block;
+padding:8px 16px;
+background:#1e293b;
+border-radius:20px;
+margin-bottom:18px;
+font-size:14px;
+color:#38bdf8;
+}
+
+.job-card h2{
+font-size:34px;
+margin-bottom:15px;
+}
+
+.info{
+margin-bottom:12px;
+color:#cbd5e1;
+font-size:17px;
+}
+
+.desc{
+margin-top:18px;
+margin-bottom:25px;
+line-height:1.8;
+color:#94a3b8;
+}
+
+.apply-btn{
+display:inline-block;
+padding:14px 24px;
+border-radius:14px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.back{
+display:inline-block;
+margin-top:40px;
+padding:14px 24px;
+border-radius:14px;
+background:#1e293b;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.empty{
+text-align:center;
+margin-top:100px;
+font-size:30px;
+color:#94a3b8;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<nav class="top-nav">
-<a href="/" class="logo">CV</a>
-<div class="nav-links">
-<a href="/">Home</a>
-<a href="/login">Login</a>
-<a href="/register">Register</a>
+<div class="top">
+
+<h1>💼 Latest Jobs</h1>
+
+<form method="GET" action="/jobs" class="search-box">
+
+<input
+type="text"
+name="search"
+placeholder="Search jobs, location or salary">
+
+<button type="submit">
+Search
+</button>
+
+</form>
+
 </div>
-</nav>
 
-<section class="jobs-hero">
-<h1>Find Your Dream Job 💼</h1>
-<p>Explore top companies hiring now with AI-powered career support.</p>
+<div class="jobs-grid">
 
-<div class="search-box">
-<input type="text" placeholder="Search jobs, skills, company...">
-<button>Search</button>
-</div>
-</section>
-
-<section class="jobs-grid">
+{% for job in jobs %}
 
 <div class="job-card">
-<h3>Python Developer</h3>
-<p>Google • Remote • ₹8 LPA</p>
-<a href="#">Apply Now</a>
+
+<div class="company">
+🏢 Tech Company
 </div>
 
-<div class="job-card">
-<h3>Frontend Developer</h3>
-<p>Microsoft • Hybrid • ₹7 LPA</p>
-<a href="#">Apply Now</a>
+<h2>
+{{ job[1] }}
+</h2>
+
+<p class="info">
+📍 Location: {{ job[2] }}
+</p>
+
+<p class="info">
+💰 Salary: {{ job[3] }}
+</p>
+
+<p class="desc">
+
+We are looking for talented candidates with good technical
+skills, communication and problem solving abilities.
+
+</p>
+
+<a
+href="/apply/{{ job[1] }}/TechCompany/{{ job[2] }}/{{ job[3] }}"
+class="apply-btn">
+
+Apply Now 🚀
+
+</a>
+
 </div>
 
-<div class="job-card">
-<h3>Data Analyst</h3>
-<p>Amazon • Bengaluru • ₹9 LPA</p>
-<a href="#">Apply Now</a>
+{% endfor %}
+
 </div>
 
-<div class="job-card">
-<h3>UI/UX Designer</h3>
-<p>Infosys • Remote • ₹6 LPA</p>
-<a href="#">Apply Now</a>
+{% if jobs|length == 0 %}
+
+<div class="empty">
+
+❌ No Jobs Found
+
 </div>
 
-<div class="job-card">
-<h3>Java Developer</h3>
-<p>TCS • Pune • ₹5.5 LPA</p>
-<a href="#">Apply Now</a>
-</div>
+{% endif %}
 
-<div class="job-card">
-<h3>AI Engineer</h3>
-<p>IBM • Remote • ₹12 LPA</p>
-<a href="#">Apply Now</a>
-</div>
-
-</section>
-
-<footer class="footer">
-CareerVerse AI © 2026 | Made by Adarsh Rathore
-</footer>
+<a href="/dashboard" class="back">
+⬅ Back Dashboard
+</a>
 
 </body>
+
 </html>

@@ -5,75 +5,488 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profile</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#050816,#0b1026,#111827);
+min-height:100vh;
+padding:40px 20px;
+color:white;
+overflow-x:hidden;
+}
+
+/* BG */
+
+.bg{
+position:fixed;
+border-radius:50%;
+filter:blur(120px);
+opacity:.25;
+z-index:-1;
+animation:move 8s infinite alternate;
+}
+
+.b1{
+width:300px;
+height:300px;
+background:#38bdf8;
+top:-100px;
+left:-100px;
+}
+
+.b2{
+width:350px;
+height:350px;
+background:#9333ea;
+right:-100px;
+top:200px;
+}
+
+@keyframes move{
+100%{
+transform:translateY(50px);
+}
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+}
+
+/* BOX */
+
+.box{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:35px;
+padding:40px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 25px rgba(56,189,248,.10);
+transition:.4s;
+}
+
+.box:hover{
+transform:translateY(-8px);
+}
+
+/* TITLE */
+
+.title{
+text-align:center;
+margin-bottom:35px;
+}
+
+.title h1{
+font-size:60px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:10px;
+}
+
+.title p{
+font-size:20px;
+color:#cbd5e1;
+}
+
+/* INPUT */
+
+.input-box{
+margin-bottom:22px;
+}
+
+.input-box label{
+display:block;
+margin-bottom:10px;
+font-size:18px;
+font-weight:bold;
+}
+
+.input-box input,
+.input-box textarea{
+width:100%;
+padding:18px;
+border:none;
+outline:none;
+border-radius:18px;
+background:#0f172a;
+color:white;
+font-size:17px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+/* UPLOAD */
+
+.upload{
+border:3px dashed #38bdf8;
+border-radius:25px;
+padding:35px;
+text-align:center;
+background:#0f172a;
+cursor:pointer;
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+
+.upload:hover{
+transform:scale(1.02);
+box-shadow:0 0 30px rgba(56,189,248,.18);
+}
+
+.upload input{
+position:absolute;
+width:100%;
+height:100%;
+left:0;
+top:0;
+opacity:0;
+cursor:pointer;
+}
+
+.upload h2{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.upload p{
+color:#cbd5e1;
+font-size:18px;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:20px;
+border:none;
+border-radius:18px;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+margin-top:20px;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-5px);
+}
+
+/* PROFILE CARD */
+
+.profile-card{
+text-align:center;
+}
+
+.profile-img{
+width:220px;
+height:220px;
+border-radius:50%;
+object-fit:cover;
+border:6px solid rgba(255,255,255,.08);
+margin-bottom:25px;
+box-shadow:0 0 30px rgba(56,189,248,.25);
+}
+
+.profile-card h2{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.profile-card p{
+font-size:20px;
+color:#cbd5e1;
+margin-bottom:18px;
+}
+
+.skills{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:14px;
+margin-top:25px;
+}
+
+.skill{
+padding:12px 20px;
+border-radius:30px;
+background:#1e293b;
+font-weight:bold;
+font-size:16px;
+transition:.3s;
+}
+
+.skill:hover{
+transform:scale(1.05);
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+}
+
+.resume-btn{
+display:inline-block;
+margin-top:30px;
+padding:16px 28px;
+border-radius:16px;
+background:#0f172a;
+color:white;
+text-decoration:none;
+font-size:20px;
+font-weight:bold;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+padding:14px 24px;
+border-radius:14px;
+background:#111827;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.title h1{
+font-size:42px;
+}
+
+.profile-img{
+width:170px;
+height:170px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-<nav class="navbar">
+<div class="bg b1"></div>
+<div class="bg b2"></div>
 
-<div class="logo">
-Smart<span>Portal</span>
+<div class="title">
+
+<h1>👤 My Profile</h1>
+
+<p>
+Build Your Professional AI Career Profile
+</p>
+
 </div>
 
-<div class="nav-right">
+<div class="container">
 
-<a href="/dashboard">Dashboard</a>
-<a href="/jobs">Jobs</a>
+<!-- LEFT -->
+
+<div class="box">
+
+<form method="POST" enctype="multipart/form-data">
+
+<div class="input-box">
+
+<label>Full Name</label>
+
+<input
+type="text"
+name="name"
+placeholder="Enter Full Name"
+required>
 
 </div>
 
-</nav>
+<div class="input-box">
 
-<section class="login-page">
+<label>Email Address</label>
 
-<div class="login-box">
+<input
+type="email"
+name="email"
+placeholder="Enter Email"
+required>
 
-<h1>User Profile</h1>
+</div>
 
-<form method="POST" action="/profile" enctype="multipart/form-data">  
+<div class="input-box">
 
-<input type="text" name="name" required>
-<input type="email" name="email" required>
-<input type="text" name="skills" required>
+<label>Your Skills</label>
 
-<input type="file" name="photo">
-<input type="file" name="resume">
+<textarea
+name="skills"
+placeholder="Python, Flask, SQL, HTML..."
+required></textarea>
 
-<button type="submit" class="blue-btn">Save Profile</button>
+</div>
 
+<div class="upload">
+
+<input
+type="file"
+name="photo"
+accept="image/*">
+
+<h2>📸 Upload Profile Photo</h2>
+
+<p>
+Choose Professional Image
+</p>
+
+</div>
+
+<br>
+
+<div class="upload">
+
+<input
+type="file"
+name="resume"
+accept=".pdf,.docx,.txt">
+
+<h2>📄 Upload Resume</h2>
+
+<p>
+PDF, DOCX or TXT
+</p>
+
+</div>
+
+<button>
+🚀 Save Profile
+</button>
 
 </form>
 
+<a href="/dashboard" class="back">
+⬅ Back Dashboard
+</a>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="box profile-card">
+
+{% if user and user[5] %}
+
+<img
+src="{{ url_for('static', filename='uploads/' + user[5]) }}"
+class="profile-img">
+
+{% else %}
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+class="profile-img">
+
+{% endif %}
+
+<h2>
+
+{% if user %}
+{{ user[1] }}
+{% else %}
+Your Name
+{% endif %}
+
+</h2>
+
+<p>
+
+{% if user %}
+{{ user[2] }}
+{% else %}
+your@email.com
+{% endif %}
+
+</p>
+
+<h3 style="margin-bottom:20px;font-size:30px;">
+🔥 Skills
+</h3>
+
+<div class="skills">
+
 {% if user %}
 
-<hr style="margin:25px 0;">
+{% for skill in user[3].split(',') %}
 
-{% if user[5] %}
-<img src="/static/uploads/{{ user[5] }}"
-style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+<div class="skill">
+{{ skill }}
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="skill">Python</div>
+<div class="skill">Flask</div>
+
 {% endif %}
 
-<h3>{{ user[1] }}</h3>
+</div>
 
-<p>{{ user[2] }}</p>
+{% if user and user[4] %}
 
-<p><b>Skills:</b> {{ user[3] }}</p>
+<a
+href="{{ url_for('static', filename='uploads/' + user[4]) }}"
+target="_blank"
+class="resume-btn">
 
-{% if user[4] %}
-<p>
-<a href="/static/uploads/{{ user[4] }}" target="_blank">
-View Resume
+📄 View Resume
+
 </a>
-</p>
-{% endif %}
 
 {% endif %}
-...page content...
 
-<footer class="footer">
-Made by <b>Adarsh Rathore</b> © 2026 | Smart Job Portal
-</footer>
+</div>
+
+</div>
+
+<script>
+
+const uploads = document.querySelectorAll(".upload input");
+
+uploads.forEach(input=>{
+
+input.addEventListener("change",function(){
+
+if(this.files.length > 0){
+
+this.parentElement.querySelector("p").innerHTML =
+"✅ " + this.files[0].name;
+
+}
+
+});
+
+});
+
+</script>
 
 </body>
 </html>

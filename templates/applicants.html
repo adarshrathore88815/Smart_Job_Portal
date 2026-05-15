@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Applicants</title>
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+padding:40px;
+color:white;
+}
+
+h1{
+font-size:50px;
+margin-bottom:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+}
+
+th,td{
+padding:18px;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+background:#1e293b;
+}
+
+.status{
+color:#22c55e;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>👥 Job Applicants</h1>
+
+<table>
+
+<tr>
+<th>User</th>
+<th>Job</th>
+<th>Company</th>
+<th>Location</th>
+<th>Salary</th>
+<th>Status</th>
+<th>Date</th>
+</tr>
+
+{% for a in applicants %}
+
+<tr>
+
+<td>{{ a[1] }}</td>
+<td>{{ a[2] }}</td>
+<td>{{ a[3] }}</td>
+<td>{{ a[4] }}</td>
+<td>{{ a[5] }}</td>
+
+<td class="status">
+{{ a[6] }}
+</td>
+
+<td>
+{{ a[7] }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

@@ -1,25 +1,95 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Apply Job</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<title>Job Applied</title>
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.box{
+background:#111827;
+padding:50px;
+border-radius:25px;
+width:500px;
+text-align:center;
+}
+
+h1{
+font-size:42px;
+margin-bottom:20px;
+color:#38bdf8;
+}
+
+p{
+font-size:18px;
+line-height:1.8;
+color:#cbd5e1;
+}
+
+a{
+display:inline-block;
+margin-top:25px;
+padding:14px 24px;
+border-radius:12px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<div class="hero ">
-<h1>Apply for Job 🚀</h1>
+<div class="box">
 
-<form method="POST" enctype="multipart/form-data">
+<h1>🎉 Applied Successfully</h1>
 
-<input type="text" name="name" placeholder="Your Name" required><br><br>
+<p>
 
-<input type="file" name="resume" required><br><br>
+Your application has been submitted successfully.
 
-<button type="submit">Submit Application</button>
+<br><br>
 
-</form>
+<b>Job:</b> {{ title }}
+
+<br>
+
+<b>Company:</b> {{ company }}
+
+<br>
+
+<b>Location:</b> {{ location }}
+
+<br>
+
+<b>Salary:</b> {{ salary }}
+
+<br><br>
+
+Status: Applied ✅
+
+</p>
+
+<a href="/jobs">
+Back To Jobs
+</a>
 
 </div>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
+
 </html>

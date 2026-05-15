@@ -2,12 +2,59 @@
 <html>
 <head>
 <title>Manage Users</title>
+
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+padding:40px;
+}
+
+h1{
+font-size:50px;
+margin-bottom:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+}
+
+th,td{
+padding:18px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-align:left;
+}
+
+th{
+background:#1e293b;
+}
+
+.back{
+display:inline-block;
+margin-top:30px;
+padding:14px 22px;
+border-radius:12px;
+background:linear-gradient(90deg,#38bdf8,#9333ea);
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
-<h1>All Registered Users 👥</h1>
+<h1>👥 Registered Users</h1>
 
-<table border="1">
+<table>
+
 <tr>
 <th>ID</th>
 <th>Name</th>
@@ -15,14 +62,22 @@
 </tr>
 
 {% for user in users %}
+
 <tr>
+
 <td>{{ user[0] }}</td>
 <td>{{ user[1] }}</td>
 <td>{{ user[2] }}</td>
+
 </tr>
+
 {% endfor %}
 
 </table>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<a href="/admin-dashboard" class="back">
+⬅ Back Dashboard
+</a>
+
 </body>
 </html>
